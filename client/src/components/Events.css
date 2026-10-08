@@ -1,0 +1,91 @@
+.events {
+  background: var(--pg-bg);
+  transition: background-color 0.4s ease;
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+
+.event-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 30px 28px;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--caramel);
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.4s ease,
+    border-color 0.4s ease, color 0.4s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-soft);
+}
+
+.event-day {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  font-family: var(--font-serif);
+  color: var(--caramel);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.event-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--mocha);
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.event-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.event-card h3 {
+  font-family: var(--font-serif);
+  font-size: 1.18rem;
+  color: var(--text);
+  margin-bottom: 8px;
+  transition: color 0.4s ease;
+}
+
+.event-card p {
+  color: var(--card-muted);
+  font-size: 0.9rem;
+  font-weight: 300;
+  transition: color 0.4s ease;
+}
+
+.event-card::after {
+  content: '—';
+  position: absolute;
+  bottom: 22px;
+  left: 28px;
+  font-size: 1.4rem;
+  color: var(--gold);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.event-card:hover::after {
+  opacity: 1;
+}
+
+@media (max-width: 900px) {
+  .events-grid {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+}

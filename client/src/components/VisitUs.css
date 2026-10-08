@@ -1,0 +1,151 @@
+.visit {
+  background: var(--section-alt);
+  transition: background-color 0.4s ease;
+}
+
+.visit-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.visit-map {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  height: 460px;
+}
+
+.visit-map iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: saturate(0.9);
+}
+
+.visit-map-pin {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  background: var(--mocha);
+  color: var(--gold);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: var(--shadow);
+  animation: pinPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes pinPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.visit-info .section-title {
+  margin-bottom: 18px;
+}
+
+.visit-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  line-height: 1.5;
+  white-space: nowrap;
+  margin-bottom: 20px;
+}
+
+.visit-status-dot {
+  font-size: 0.48rem;
+  line-height: 1;
+}
+
+.visit-open {
+  color: #5f7d68;
+}
+
+.visit-open .visit-status-dot {
+  animation: statusPulse 1.6s ease-in-out infinite;
+}
+
+.visit-closed {
+  color: #b3564f;
+}
+
+@keyframes statusPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.6;
+  }
+}
+
+.visit-block h3 {
+  font-family: var(--font-serif);
+  font-size: 1.06rem;
+  color: var(--coffee);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.hours {
+  list-style: none;
+  margin-bottom: 30px;
+}
+
+.hours li {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 9px 0;
+  border-bottom: 1px dashed var(--line);
+  color: var(--text-muted);
+  transition: border-color 0.4s ease, color 0.4s ease;
+}
+
+.hours li:last-child {
+  border-bottom: none;
+}
+
+.hours-time {
+  font-family: var(--font-serif);
+  color: var(--text);
+  white-space: nowrap;
+  transition: color 0.4s ease;
+}
+
+.address-block p {
+  color: var(--text-muted);
+  font-weight: 300;
+  margin-bottom: 22px;
+  transition: color 0.4s ease;
+}
+
+@media (max-width: 900px) {
+  .visit-grid {
+    grid-template-columns: 1fr;
+    gap: 46px;
+  }
+
+  .visit-map img {
+    height: 300px;
+  }
+}

@@ -1,0 +1,78 @@
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: linear-gradient(135deg, var(--espresso), var(--mocha));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+
+.preloader-done {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.pre-img {
+  position: relative;
+  animation: preFloat 2.4s ease-in-out infinite;
+}
+
+.pre-cup {
+  font-size: 2.6rem;
+}
+
+@keyframes preFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.pre-logo {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--cream);
+  letter-spacing: 1px;
+}
+
+.pre-script {
+  font-family: var(--font-script);
+  font-weight: 400;
+  color: var(--gold);
+  font-size: 1.6rem;
+  margin-right: 2px;
+}
+
+.pre-progress {
+  width: 120px;
+  height: 3px;
+  background: rgba(231, 211, 193, 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.pre-progress span {
+  display: block;
+  height: 100%;
+  width: 40%;
+  background: var(--gold);
+  border-radius: 3px;
+  animation: preBar 1.4s ease forwards;
+}
+
+@keyframes preBar {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
