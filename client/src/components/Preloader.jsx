@@ -1,13 +1,24 @@
 import { useState, useEffect } from 'react';
 import './Preloader.css';
 
+const KEY = 'cocoa-preloader-shown';
+
+if (typeof window !== 'undefined' && location.pathname !== '/' && sessionStorage.getItem(KEY) !== '1') {
+  sessionStorage.setItem(KEY, '1');
+}
+
 export default function Preloader() {
+  const [ran] = useState(() => sessionStorage.getItem(KEY) === '1');
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
+    if (ran) return;
+    sessionStorage.setItem(KEY, '1');
     const timer = setTimeout(() => setHidden(true), 1400);
     return () => clearTimeout(timer);
-  }, []);
+  }, [ran]);
+
+  if (ran) return null;
 
   return (
     <div className={`preloader ${hidden ? 'preloader-done' : ''}`} aria-hidden={hidden}>

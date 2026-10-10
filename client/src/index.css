@@ -43,7 +43,7 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 76px;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 ::-webkit-scrollbar {
@@ -73,7 +73,7 @@ body {
   background: var(--pg-bg);
   color: var(--text);
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow-x: clip;
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
@@ -170,6 +170,15 @@ a {
 .btn-ghost:hover {
   background: var(--coffee);
   color: #fff;
+}
+
+.btn-ghost:hover,
+.btn-outline:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.97);
 }
 
 .reveal {

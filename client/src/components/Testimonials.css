@@ -1,3 +1,93 @@
+.testi {
+  position: relative;
+  overflow: hidden;
+}
+
+.testi-fx {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.testi-fx-quote {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-serif);
+  font-size: clamp(14rem, 30vw, 24rem);
+  line-height: 1;
+  color: rgba(169, 113, 75, 0.07);
+}
+
+.testi-fx-dot {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(201, 162, 39, 0.3);
+}
+
+.testi-fx-dot:nth-of-type(2) { left: 12%; top: 24%; }
+.testi-fx-dot:nth-of-type(3) { right: 14%; top: 34%; width: 5px; height: 5px; }
+.testi-fx-dot:nth-of-type(4) { left: 22%; bottom: 18%; width: 5px; height: 5px; }
+
+.testi .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Rating summary ---------- */
+
+.testi-summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px 20px;
+  margin-bottom: 30px;
+}
+
+.testi-score {
+  font-family: var(--font-serif);
+  font-size: 2.9rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--mocha);
+}
+
+.testi-summary-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: left;
+}
+
+.testi-summary-text {
+  font-size: 0.8rem;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--card-muted);
+}
+
+.testi-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(201, 162, 39, 0.45);
+  background: rgba(201, 162, 39, 0.12);
+  color: #8a6f14;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* ---------- Slider ---------- */
+
 .testi-slider {
   position: relative;
   max-width: 760px;
@@ -15,6 +105,8 @@
 .testi-viewport {
   overflow: hidden;
   border-radius: var(--radius);
+  perspective: 1300px;
+  touch-action: pan-y;
 }
 
 .testi-track {
@@ -23,15 +115,60 @@
 }
 
 .testi-card {
-  flex: 0 0 100%;
+  position: relative;
+  flex: 0 0 88%;
+  margin: 0 6%;
   background: var(--surface);
   border-radius: var(--radius);
   padding: 44px 40px 36px;
   box-shadow: var(--shadow-soft);
   border-top: 3px solid var(--gold);
   text-align: center;
+  opacity: 0.4;
+  transform: scale(0.92);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.testi-card.is-active {
+  opacity: 1;
+  transform: scale(1) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  box-shadow: 0 18px 44px rgba(43, 26, 18, 0.14);
+}
+
+.testi-card.is-active::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(420px circle at var(--gx, 50%) var(--gy, 50%), rgba(201, 162, 39, 0.13), transparent 65%);
+  transition: opacity 0.3s ease;
+}
+
+.testi-fade {
   position: relative;
-  transition: background-color 0.4s ease, box-shadow 0.4s ease, color 0.4s ease;
+  z-index: 1;
+}
+
+.testi-fade > * {
+  animation: testiRise 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.testi-fade > *:nth-child(1) { animation-delay: 0.05s; }
+.testi-fade > *:nth-child(2) { animation-delay: 0.13s; }
+.testi-fade > *:nth-child(3) { animation-delay: 0.21s; }
+.testi-fade > *:nth-child(4) { animation-delay: 0.29s; }
+
+@keyframes testiRise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .testi-quote {
@@ -49,6 +186,10 @@
   letter-spacing: 3px;
   font-size: 1.05rem;
   margin-bottom: 18px;
+}
+
+.star-off {
+  color: var(--line);
 }
 
 .testi-card blockquote {
@@ -72,24 +213,43 @@
 }
 
 .testi-avatar {
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background: var(--coffee);
   color: var(--cream);
   font-family: var(--font-serif);
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
   flex-shrink: 0;
+  border: 2px solid var(--gold);
+  box-shadow: 0 4px 14px rgba(43, 26, 18, 0.16);
+}
+
+.testi-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.testi-avatar-initials {
+  font-size: 0.92rem;
+  letter-spacing: 1px;
+}
+
+.testi-person {
+  text-align: left;
 }
 
 .testi-card strong {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 6px;
   color: var(--text);
   font-size: 0.98rem;
-  text-align: left;
   transition: color 0.4s ease;
 }
 
@@ -102,22 +262,23 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 46px;
-  height: 46px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: 1.5px solid var(--caramel);
   background: var(--surface);
   color: var(--coffee);
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   line-height: 1;
   cursor: pointer;
-  z-index: 2;
-  transition: all 0.3s ease;
+  z-index: 3;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .testi-arrow:hover {
   background: var(--mocha);
   color: var(--gold);
+  box-shadow: var(--shadow-soft);
 }
 
 .testi-prev {
@@ -128,42 +289,150 @@
   right: -70px;
 }
 
+/* ---------- Controls ---------- */
+
+.testi-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 26px;
+}
+
 .testi-dots {
   display: flex;
   justify-content: center;
   gap: 9px;
-  margin-top: 24px;
 }
 
 .testi-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  border: none;
-  background: var(--line);
-  cursor: pointer;
+  position: relative;
+  width: 22px;
+  height: 22px;
   padding: 0;
-  transition: all 0.3s ease;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
 }
 
-.testi-dot-active {
+.testi-dot::before {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  border-radius: 50%;
+  background: var(--line);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.testi-dot:hover::before {
   background: var(--caramel);
-  transform: scale(1.3);
+  transform: scale(1.1);
+}
+
+.testi-dot-active::before {
+  background: var(--caramel);
+}
+
+.testi-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+
+.testi-ring-fill {
+  fill: none;
+  stroke: var(--caramel);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  animation: testiRing 5s linear forwards;
+}
+
+.testi-slider.is-paused .testi-ring-fill {
+  animation-play-state: paused;
+}
+
+@keyframes testiRing {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.testi-toggle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  color: var(--coffee);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+
+.testi-toggle:hover {
+  border-color: var(--caramel);
+  background: var(--section-alt);
+  color: var(--caramel);
 }
 
 @media (max-width: 900px) {
-  .testi-prev {
-    left: 4px;
+  .testi-arrow {
+    position: static;
+    transform: none;
+    width: 40px;
+    height: 40px;
+    font-size: 1.35rem;
+    box-shadow: var(--shadow-soft);
   }
-  .testi-next {
-    right: 4px;
+
+  .testi-arrow:hover {
+    transform: translateY(-2px);
   }
 
   .testi-card {
+    flex-basis: 94%;
+    margin: 0 3%;
     padding: 40px 24px 30px;
   }
 
   .testi-card blockquote {
     font-size: 1rem;
+  }
+}
+
+@media (max-width: 620px) {
+  .testi-summary {
+    gap: 10px 16px;
+  }
+
+  .testi-score {
+    font-size: 2.3rem;
+  }
+
+  .testi-fx-quote {
+    font-size: 11rem;
+    top: -24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testi-fade > * {
+    animation: none;
+  }
+
+  .testi-ring-fill {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  .testi-card,
+  .testi-card.is-active {
+    transform: none;
   }
 }

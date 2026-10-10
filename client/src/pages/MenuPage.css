@@ -1,0 +1,38 @@
+.menu-page {
+  min-height: 70vh;
+}
+
+.menu-page .section-pad.menu-section {
+  padding-top: 0;
+}
+
+.menu-page-head {
+  text-align: center;
+  padding: 88px 0 14px;
+}
+
+.menu-page-head .kicker {
+  font-size: 1.8rem;
+}
+
+.menu-page-head h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.9rem, 4.5vw, 2.9rem);
+  color: var(--text);
+  margin-top: 8px;
+  transition: color 0.4s ease;
+}
+
+.menu-page-head p {
+  color: var(--text-muted);
+  font-weight: 300;
+  font-size: 1rem;
+  max-width: 560px;
+  margin: 12px auto 0;
+}
+
+@media (max-width: 600px) {
+  .menu-page-head {
+    padding: 60px 0 8px;
+  }
+}
