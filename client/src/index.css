@@ -266,3 +266,11 @@ input:focus-visible {
     padding: 48px 0;
   }
 }
+
+html.nav-hidden .menu-toolbar {
+  top: 18px;
+}
+
+html.nav-hidden .meal-nav {
+  top: 40px;
+}

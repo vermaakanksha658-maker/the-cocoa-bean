@@ -4,13 +4,13 @@ import './Gallery.css';
 
 const shots = [
   {
-    src: 'https://images.unsplash.com/photo-1777451441095-c7ef2f875929?fm=jpg&q=80&w=900&auto=format&fit=crop',
-    caption: 'Plant-filled corners',
+    src: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?fm=jpg&q=80&w=900&auto=format&fit=crop',
+    caption: 'Morning light inside',
     tag: 'Cozy',
   },
   {
-    src: 'https://images.unsplash.com/photo-1752757257738-9a4f136b3f87?fm=jpg&q=80&w=900&auto=format&fit=crop',
-    caption: 'Wooden warmth',
+    src: 'https://images.unsplash.com/photo-1521017432531-fbd92d768814?fm=jpg&q=80&w=900&auto=format&fit=crop',
+    caption: 'Corner seat, warm lamp',
     tag: 'Cozy',
   },
   {
@@ -19,9 +19,9 @@ const shots = [
     tag: 'Coffee',
   },
   {
-    src: 'https://images.unsplash.com/photo-1769138885118-c1261518414d?fm=jpg&q=80&w=900&auto=format&fit=crop',
-    caption: 'Breakfast moments',
-    tag: 'Food',
+    src: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?fm=jpg&q=80&w=900&auto=format&fit=crop',
+    caption: 'Golden latte art',
+    tag: 'Coffee',
   },
   {
     src: 'https://images.unsplash.com/photo-1759566926659-b1a9ec89cc82?fm=jpg&q=80&w=900&auto=format&fit=crop',
@@ -32,6 +32,36 @@ const shots = [
     src: 'https://images.unsplash.com/photo-1757010055832-de355d2f8f06?fm=jpg&q=80&w=900&auto=format&fit=crop',
     caption: 'Warm lighting',
     tag: 'Coffee',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1484723091739-30a097e8f929?fm=jpg&q=80&w=900&auto=format&fit=crop',
+    caption: 'Slow breakfast plate',
+    tag: 'Food',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?fm=jpg&q=80&w=900&auto=format&fit=crop',
+    caption: 'Fresh from the oven',
+    tag: 'Pastries',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?fm=jpg&q=80&w=900&auto=format&fit=crop',
+    caption: 'Baked early morning',
+    tag: 'Pastries',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1519676867240-f03562e64548?fm=jpg&q=80&w=900&auto=format&fit=crop',
+    caption: 'Brunch table',
+    tag: 'Food',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?fm=jpg&q=80&w=900&auto=format&fit=crop',
+    caption: 'Our daily spread',
+    tag: 'Food',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1777451441095-c7ef2f875929?fm=jpg&q=80&w=900&auto=format&fit=crop',
+    caption: 'Plant-filled corners',
+    tag: 'Cozy',
   },
 ];
 
@@ -209,11 +239,15 @@ export default function Gallery() {
     const py = (e.clientY - r.top) / r.height;
     card.style.setProperty('--px', `${(px - 0.5) * 16}px`);
     card.style.setProperty('--py', `${(py - 0.5) * 16}px`);
+    card.style.setProperty('--rx', `${(0.5 - py) * 5}deg`);
+    card.style.setProperty('--ry', `${(px - 0.5) * 6}deg`);
   };
 
   const onLeaveCard = (e) => {
     e.currentTarget.style.setProperty('--px', '0px');
     e.currentTarget.style.setProperty('--py', '0px');
+    e.currentTarget.style.setProperty('--rx', '0deg');
+    e.currentTarget.style.setProperty('--ry', '0deg');
   };
 
   const onStripScroll = () => {
@@ -243,6 +277,25 @@ export default function Gallery() {
 
   return (
     <section className="section-pad gallery" aria-label="Cafe gallery">
+      <div className="gallery-ambient" aria-hidden="true">
+        <span className="gallery-beam"></span>
+        <span className="gallery-beam gallery-beam-2"></span>
+        <span className="gallery-stain"></span>
+        <span className="gallery-stain gallery-stain-2"></span>
+        <span className="gallery-glow"></span>
+        <span className="gallery-glow gallery-glow-2"></span>
+        <span className="gallery-wisp"></span>
+        <span className="gallery-wisp"></span>
+        <span className="gallery-wisp"></span>
+        <span className="gallery-wisp"></span>
+        <span className="gallery-spark"></span>
+        <span className="gallery-spark"></span>
+        <span className="gallery-spark"></span>
+        <span className="gallery-spark"></span>
+        <span className="gallery-spark"></span>
+        <span className="gallery-spark"></span>
+      </div>
+
       <div className="container">
         <div className={`section-head reveal ${headIn ? 'in-view' : ''}`} ref={headRef}>
           <span className="kicker">a peek inside</span>

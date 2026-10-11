@@ -186,6 +186,21 @@ export default function About() {
         <BigBean />
       </span>
 
+      <div className="about-ambient" aria-hidden="true">
+        <span className="about-wisp"></span>
+        <span className="about-wisp"></span>
+        <span className="about-wisp"></span>
+        <span className="about-wisp"></span>
+        <span className="about-bean"></span>
+        <span className="about-bean"></span>
+        <span className="about-bean"></span>
+        <span className="about-bean"></span>
+        <span className="about-bean"></span>
+        <span className="about-bean"></span>
+        <span className="about-bean"></span>
+        <span className="about-bean"></span>
+      </div>
+
       <div className="container about-grid">
         <div className={`about-media reveal reveal-left ${leftIn ? 'in-view' : ''}`} ref={leftRef}>
           <div

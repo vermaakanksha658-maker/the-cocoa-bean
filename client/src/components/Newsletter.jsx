@@ -46,7 +46,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function CupArt() {
   return (
-    <svg className="news-cup" viewBox="0 0 140 150" fill="none" aria-hidden="true">
+    <svg className="news-cup" viewBox="0 0 140 150" fill="none">
       <g className="news-cup-steam" stroke="#E7D3C1" strokeWidth="3" strokeLinecap="round">
         <path d="M60 58c-5-9 5-11 0-22M78 62c-5-9 5-11 0-22" />
       </g>
@@ -63,21 +63,27 @@ function CupArt() {
   );
 }
 
+function reduced() {
+  return typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+}
+
 function Envelope() {
   return (
-    <svg className="news-env" viewBox="0 0 76 56" fill="none" aria-hidden="true">
-      <rect className="news-env-body" x="3" y="9" width="70" height="42" rx="7" stroke="currentColor" strokeWidth="2.4" />
-      <path
-        className="news-env-flap"
-        d="M4 16 38 40 72 16"
-        stroke="currentColor"
-        strokeWidth="2.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path className="news-env-letter" d="M13 24h50v20a5 5 0 0 1-5 5H18a5 5 0 0 1-5-5z" fill="currentColor" opacity="0.16" />
-      <path className="news-env-tick" d="M27 40l8 8 15-17" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <div className="news-env-stage" aria-hidden="true">
+      <svg className="news-env" viewBox="0 0 76 56" fill="none">
+        <rect className="news-env-body" x="3" y="9" width="70" height="42" rx="7" stroke="currentColor" strokeWidth="2.4" />
+        <path
+          className="news-env-flap"
+          d="M4 16 38 40 72 16"
+          stroke="currentColor"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path className="news-env-letter" d="M13 24h50v20a5 5 0 0 1-5 5H18a5 5 0 0 1-5-5z" fill="currentColor" opacity="0.16" />
+        <path className="news-env-tick" d="M27 40l8 8 15-17" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </div>
   );
 }
 
@@ -99,8 +105,27 @@ export default function Newsletter() {
   const [ref, inView] = useInView();
   const inputRef = useRef(null);
   const shakeTimer = useRef(null);
+  const cupRef = useRef(null);
 
   useEffect(() => () => clearTimeout(shakeTimer.current), []);
+
+  const onCupMove = (e) => {
+    if (reduced()) return;
+    const stage = cupRef.current;
+    if (!stage) return;
+    const r = stage.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width;
+    const py = (e.clientY - r.top) / r.height;
+    stage.style.setProperty('--ry', `${(px - 0.5) * 24}deg`);
+    stage.style.setProperty('--rx', `${(0.5 - py) * 18}deg`);
+  };
+
+  const onCupLeave = () => {
+    const stage = cupRef.current;
+    if (!stage) return;
+    stage.style.setProperty('--rx', '0deg');
+    stage.style.setProperty('--ry', '0deg');
+  };
 
   const submit = (e) => {
     e.preventDefault();
@@ -125,7 +150,16 @@ export default function Newsletter() {
     <section id="newsletter" className="news">
       <span className="news-glow" aria-hidden="true"></span>
       <span className="news-fx" aria-hidden="true">
-        <CupArt />
+        <div
+          className="news-cup-stage"
+          ref={cupRef}
+          onMouseMove={onCupMove}
+          onMouseLeave={onCupLeave}
+        >
+          <div className="news-cup-tilt">
+            <CupArt />
+          </div>
+        </div>
         {BEANS.map((n) => (
           <span className="news-bean" key={n} style={{ '--i': n }}></span>
         ))}

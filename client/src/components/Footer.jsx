@@ -92,6 +92,18 @@ export default function Footer() {
 
   return (
     <footer className="footer">
+      <div className="footer-ambient" aria-hidden="true">
+        <span className="footer-amb-bean"></span>
+        <span className="footer-amb-bean"></span>
+        <span className="footer-amb-bean"></span>
+        <span className="footer-amb-bean"></span>
+        <span className="footer-amb-bean"></span>
+        <span className="footer-amb-bean"></span>
+        <span className="footer-amb-bean"></span>
+        <span className="footer-amb-bean"></span>
+        <span className="footer-amb-sheen"></span>
+      </div>
+
       <div className="footer-inner">
         <div className="container">
           <div className="footer-cta">
@@ -169,13 +181,14 @@ export default function Footer() {
 
             <div className="footer-col footer-follow">
               <h4>Follow Us</h4>
-              <div className="footer-social">
-                {socials.map((s) => (
-                  <a key={s.label} href={s.href} target="_blank" rel="noreferrer" aria-label={s.label}>
-                    {s.icon}
-                  </a>
-                ))}
-              </div>
+          <div className="footer-social">
+            {socials.map((s) => (
+              <a key={s.label} href={s.href} target="_blank" rel="noreferrer" aria-label={s.label} className="footer-social-link">
+                <span className="footer-social-face">{s.icon}</span>
+                <span className="footer-social-face footer-social-back">{s.icon}</span>
+              </a>
+            ))}
+          </div>
 
               <div className="footer-hours">
                 <span className={`footer-hours-dot ${status.open ? 'is-open' : ''}`} aria-hidden="true"></span>

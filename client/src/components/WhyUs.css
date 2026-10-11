@@ -66,6 +66,156 @@
 .why-fx span:nth-child(9) { left: 76%; animation-duration: 22s;   animation-delay: 1.2s; }
 .why-fx span:nth-child(10){ left: 88%; animation-duration: 16.5s; animation-delay: 4.8s; }
 
+/* ---------- Ambient: stains + pulse + steam + beans ---------- */
+
+.why-ambient {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.why-amb-stain {
+  position: absolute;
+  top: 10%;
+  right: -90px;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(231, 211, 193, 0.09) 0%, rgba(231, 211, 193, 0.06) 58%, rgba(231, 211, 193, 0) 66%);
+  box-shadow: inset 0 0 0 8px rgba(231, 211, 193, 0.07), inset 0 0 0 20px rgba(231, 211, 193, 0.04);
+  filter: blur(1px);
+  animation: whyAmbStain 30s ease-in-out infinite alternate;
+}
+
+.why-amb-stain-2 {
+  top: auto;
+  bottom: 8%;
+  right: auto;
+  left: -100px;
+  width: 260px;
+  height: 260px;
+  animation-duration: 36s;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes whyAmbStain {
+  from {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+  to {
+    transform: translate3d(-22px, 18px, 0) rotate(16deg) scale(1.06);
+  }
+}
+
+.why-amb-glow {
+  position: absolute;
+  left: 50%;
+  top: -14%;
+  width: 56%;
+  height: 54%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(201, 162, 39, 0.17) 0%, rgba(201, 162, 39, 0.05) 58%, rgba(201, 162, 39, 0) 72%);
+  animation: whyAmbPulse 11s ease-in-out infinite;
+}
+
+.why-amb-glow-2 {
+  top: auto;
+  bottom: -12%;
+  width: 50%;
+  height: 52%;
+  background: radial-gradient(ellipse at center, rgba(169, 113, 75, 0.16) 0%, rgba(169, 113, 75, 0.05) 58%, rgba(169, 113, 75, 0) 72%);
+  animation-duration: 14s;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes whyAmbPulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.1);
+  }
+}
+
+.why-amb-wisp {
+  position: absolute;
+  bottom: -8%;
+  width: 34%;
+  height: 42%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(231, 211, 193, 0.08) 0%, rgba(231, 211, 193, 0.02) 60%, rgba(231, 211, 193, 0) 74%);
+  filter: blur(20px);
+  opacity: 0;
+  animation: whyAmbWisp 22s linear infinite;
+}
+
+.why-amb-wisp:nth-child(7) { left: -3%;  animation-duration: 24s; animation-delay: 0s; }
+.why-amb-wisp:nth-child(8) { left: 22%;  animation-duration: 28s; animation-delay: 5s; }
+.why-amb-wisp:nth-child(9) { left: 48%;  animation-duration: 21s; animation-delay: 10s; }
+.why-amb-wisp:nth-child(10){ left: 70%;  animation-duration: 26s; animation-delay: 14s; }
+
+@keyframes whyAmbWisp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 8vh, 0) scale(0.9);
+  }
+  25% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.45;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(5vw, -95%, 0) scale(1.3);
+  }
+}
+
+.why-amb-bean {
+  position: absolute;
+  bottom: -20px;
+  width: 11px;
+  height: 7px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 32%, rgba(255, 233, 176, 0.4), rgba(201, 162, 39, 0.08));
+  animation: whyAmbBean 28s linear infinite;
+}
+
+.why-amb-bean:nth-child(odd) {
+  width: 7px;
+  height: 11px;
+}
+
+.why-amb-bean:nth-child(11) { left: 8%;  animation-duration: 27s; animation-delay: 0s; }
+.why-amb-bean:nth-child(12) { left: 21%; animation-duration: 33s; animation-delay: 4s; }
+.why-amb-bean:nth-child(13) { left: 34%; animation-duration: 25s; animation-delay: 8s; }
+.why-amb-bean:nth-child(14) { left: 47%; animation-duration: 31s; animation-delay: 12s; }
+.why-amb-bean:nth-child(15) { left: 60%; animation-duration: 29s; animation-delay: 16s; }
+.why-amb-bean:nth-child(16) { left: 73%; animation-duration: 26s; animation-delay: 2s; }
+
+@keyframes whyAmbBean {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  12% {
+    opacity: 0.9;
+  }
+  85% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(24px, -100vh, 0) rotate(300deg);
+  }
+}
+
 @keyframes whyDrift {
   0% {
     opacity: 0;
@@ -97,7 +247,7 @@
   border-radius: var(--radius);
   background: rgba(255, 250, 244, 0.06);
   border: 1px solid rgba(231, 211, 193, 0.14);
-  overflow: hidden;
+  perspective: 900px;
   transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--lift, 0px));
   transition: transform 0.28s ease-out, border-color 0.35s ease, background 0.35s ease;
   transform-style: preserve-3d;
@@ -136,7 +286,7 @@
 
 .why-card-wide .why-num {
   right: 26px;
-  bottom: -14px;
+  bottom: 12px;
 }
 
 .why-card-inner {
@@ -149,8 +299,9 @@
   height: 100%;
   padding: 34px 28px;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease var(--d, 0s), transform 0.6s ease var(--d, 0s);
+  transform: rotateY(-14deg) translateY(26px);
+  transform-style: preserve-3d;
+  transition: opacity 0.6s ease var(--d, 0s), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s);
 }
 
 .why-card-inner.in-view {
@@ -168,12 +319,13 @@
   line-height: 1;
   color: rgba(247, 240, 230, 0.07);
   pointer-events: none;
+  transform: translateZ(24px);
   transition: color 0.4s ease, transform 0.5s ease;
 }
 
 .why-card:hover .why-num {
   color: rgba(201, 162, 39, 0.22);
-  transform: translateY(-4px);
+  transform: translateZ(32px) translateY(-4px);
 }
 
 .why-card-wide .why-body {
@@ -190,13 +342,15 @@
   justify-content: center;
   color: var(--gold);
   border-radius: 50%;
-  transition: background 0.35s ease, color 0.35s ease, transform 0.4s ease;
+  transform: translateZ(52px);
+  transform-style: preserve-3d;
+  transition: background 0.35s ease, color 0.35s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .why-card:hover .why-icon {
   background: var(--gold);
   color: var(--espresso);
-  transform: scale(1.06);
+  transform: translateZ(78px) scale(1.08);
 }
 
 .why-ring {
@@ -236,6 +390,7 @@
 
 .why-body {
   text-align: left;
+  transform: translateZ(14px);
 }
 
 .why-card h3 {
@@ -306,8 +461,8 @@
 
 .why-watermark {
   position: absolute;
-  right: -18px;
-  bottom: -22px;
+  right: 6px;
+  bottom: 0;
   width: 140px;
   color: var(--gold);
   opacity: 0;
@@ -429,17 +584,31 @@
     transition: none;
   }
 
+  .why-card-inner,
+  .why-icon,
+  .why-num,
+  .why-body {
+    transform: none;
+    transform-style: flat;
+  }
+
   .why-card-inner {
     opacity: 1;
-    transform: none;
   }
 
   .why-more {
     opacity: 1;
-    transform: none;
   }
 
   .why-fx span {
     animation: none;
+  }
+
+  .why-amb-stain,
+  .why-amb-glow,
+  .why-amb-wisp,
+  .why-amb-bean {
+    animation: none;
+    opacity: 0;
   }
 }

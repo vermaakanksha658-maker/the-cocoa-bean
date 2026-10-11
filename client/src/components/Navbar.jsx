@@ -109,6 +109,11 @@ export default function Navbar() {
   }, [open, onMenu]);
 
   useEffect(() => {
+    document.documentElement.classList.toggle('nav-hidden', hidden && !open);
+    return () => document.documentElement.classList.remove('nav-hidden');
+  }, [hidden, open]);
+
+  useEffect(() => {
     if (!open) return;
     const onKey = (e) => e.key === 'Escape' && setOpen(false);
     document.addEventListener('keydown', onKey);

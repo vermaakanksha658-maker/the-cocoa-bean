@@ -12,6 +12,13 @@
   pointer-events: none;
   opacity: 0.08;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cg fill='none' stroke='%23f7f0e6' stroke-width='1.3' stroke-linecap='round'%3E%3Cellipse cx='25' cy='25' rx='8' ry='12' transform='rotate(-20 25 25)'/%3E%3Cpath d='M20 15c3.4 4.6 3.4 14 5.6 20'/%3E%3Cellipse cx='95' cy='70' rx='8' ry='12' transform='rotate(20 95 70)'/%3E%3Cpath d='M100 60c-3.4 4.6-3.4 14-5.6 20'/%3E%3Cellipse cx='40' cy='110' rx='6' ry='9' transform='rotate(-35 40 110)'/%3E%3Cpath d='M36 103c2.6 3.4 2.6 10.5 4.2 15'/%3E%3C/g%3E%3C/svg%3E");
+  animation: statsPattern 40s linear infinite;
+}
+
+@keyframes statsPattern {
+  to {
+    background-position: 1400px 280px;
+  }
 }
 
 .stats::after {
@@ -29,6 +36,128 @@
 .stats-inner {
   position: relative;
   z-index: 1;
+}
+
+/* ---------- Ambient fx: ripples + steam + beans ---------- */
+
+.stats-fx {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.stats-ripple {
+  position: absolute;
+  left: 50%;
+  top: 58%;
+  width: 220px;
+  height: 220px;
+  margin: -110px 0 0 -110px;
+  border-radius: 50%;
+  border: 2px solid rgba(201, 162, 39, 0.5);
+  transform: scale(0.2);
+  opacity: 0;
+  animation: statsRipple 7s ease-out infinite;
+}
+
+.stats-ripple:nth-child(2) {
+  animation-delay: 2.33s;
+}
+
+.stats-ripple:nth-child(3) {
+  animation-delay: 4.66s;
+}
+
+@keyframes statsRipple {
+  0% {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(3.4);
+    opacity: 0;
+  }
+}
+
+.stats-steam {
+  position: absolute;
+  bottom: -14%;
+  width: 40%;
+  height: 60%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(247, 240, 230, 0.11) 0%, rgba(247, 240, 230, 0) 66%);
+  filter: blur(24px);
+  opacity: 0;
+  animation: statsSteam 17s linear infinite;
+}
+
+.stats-steam:nth-child(4) { left: -4%;  animation-duration: 19s; animation-delay: 0s; }
+.stats-steam:nth-child(5) { left: 16%;  animation-duration: 23s; animation-delay: 3.6s; }
+.stats-steam:nth-child(6) { left: 34%;  animation-duration: 18s; animation-delay: 7.2s; }
+.stats-steam:nth-child(7) { left: 56%;  animation-duration: 21s; animation-delay: 1.9s; }
+.stats-steam:nth-child(8) { left: 76%;  animation-duration: 25s; animation-delay: 9.4s; }
+
+@keyframes statsSteam {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 10vh, 0) scale(0.9);
+  }
+  25% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(5vw, -90%, 0) scale(1.35);
+  }
+}
+
+.stats-bean {
+  position: absolute;
+  bottom: -20px;
+  width: 11px;
+  height: 7px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 32%, rgba(255, 233, 176, 0.34), rgba(201, 162, 39, 0.05));
+  animation: statsBean 28s linear infinite;
+}
+
+.stats-bean:nth-child(odd) {
+  width: 7px;
+  height: 11px;
+}
+
+.stats-bean:nth-child(9)  { left: 5%;  animation-duration: 26s; animation-delay: 0s; }
+.stats-bean:nth-child(10) { left: 15%; animation-duration: 33s; animation-delay: 3s; }
+.stats-bean:nth-child(11) { left: 26%; animation-duration: 24s; animation-delay: 6s; }
+.stats-bean:nth-child(12) { left: 37%; animation-duration: 30s; animation-delay: 9s; }
+.stats-bean:nth-child(13) { left: 49%; animation-duration: 27s; animation-delay: 12s; }
+.stats-bean:nth-child(14) { left: 61%; animation-duration: 31s; animation-delay: 15s; }
+.stats-bean:nth-child(15) { left: 74%; animation-duration: 25s; animation-delay: 18s; }
+.stats-bean:nth-child(16) { left: 88%; animation-duration: 29s; animation-delay: 21s; }
+
+@keyframes statsBean {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  12% {
+    opacity: 0.8;
+  }
+  85% {
+    opacity: 0.35;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(30px, -105vh, 0) rotate(300deg);
+  }
 }
 
 .stats-kicker {
@@ -170,7 +299,7 @@
   font-size: clamp(2.1rem, 4.6vw, 3rem);
   font-weight: 700;
   line-height: 1.12;
-  color: #f0cf72;
+  color: #f0d98a;
 }
 
 .stat-suffix {
@@ -317,6 +446,17 @@
     opacity: 1;
     transform: none;
     transition: none;
+  }
+
+  .stats-ripple,
+  .stats-steam,
+  .stats-bean {
+    animation: none;
+    opacity: 0;
+  }
+
+  .stats::before {
+    animation: none;
   }
 
   .stat-ring-wrap {

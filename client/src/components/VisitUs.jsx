@@ -201,6 +201,21 @@ export default function VisitUs() {
 
   const timeLabel = (h) => `${hm(h.open)} — ${hm(h.close)}`;
 
+  const onShotMove = (e) => {
+    const img = e.currentTarget;
+    const r = img.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width;
+    const py = (e.clientY - r.top) / r.height;
+    img.style.setProperty('--ry', `${(px - 0.5) * 12}deg`);
+    img.style.setProperty('--rx', `${(0.5 - py) * 12}deg`);
+  };
+
+  const onShotLeave = (e) => {
+    const img = e.currentTarget;
+    img.style.setProperty('--rx', '0deg');
+    img.style.setProperty('--ry', '0deg');
+  };
+
   const copyAddress = async () => {
     const flash = () => {
       setCopied(true);
@@ -237,6 +252,18 @@ export default function VisitUs() {
 
   return (
     <section id="visit" className="section-pad visit">
+      <div className="visit-ambient" aria-hidden="true">
+        <span className="visit-mapgrid"></span>
+        <span className="visit-stain"></span>
+        <span className="visit-stain visit-stain-2"></span>
+        <span className="visit-glow"></span>
+        <span className="visit-glow visit-glow-2"></span>
+        <span className="visit-wisp"></span>
+        <span className="visit-wisp"></span>
+        <span className="visit-wisp"></span>
+        <span className="visit-wisp"></span>
+      </div>
+
       <div className="container visit-grid">
         <div className={`visit-col reveal reveal-left ${leftIn ? 'in-view' : ''}`} ref={leftRef}>
           <div className="visit-map">
@@ -247,6 +274,7 @@ export default function VisitUs() {
               referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
 
+            <span className="visit-map-pin-shadow" aria-hidden="true"></span>
             <span className="visit-map-pin" aria-hidden="true">
               <PinIcon />
             </span>
@@ -265,7 +293,15 @@ export default function VisitUs() {
 
           <div className="visit-shots">
             {shots.map((s) => (
-              <img key={s.src} src={s.src} alt={s.caption} loading="lazy" decoding="async" />
+              <img
+                key={s.src}
+                src={s.src}
+                alt={s.caption}
+                loading="lazy"
+                decoding="async"
+                onMouseMove={onShotMove}
+                onMouseLeave={onShotLeave}
+              />
             ))}
           </div>
         </div>

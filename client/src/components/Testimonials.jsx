@@ -193,6 +193,25 @@ export default function Testimonials() {
         <span className="testi-fx-dot"></span>
       </span>
 
+      <div className="testi-ambient" aria-hidden="true">
+        <span className="testi-float-quote">”</span>
+        <span className="testi-float-quote testi-fq-2">”</span>
+        <span className="testi-stain"></span>
+        <span className="testi-stain testi-stain-2"></span>
+        <span className="testi-glow"></span>
+        <span className="testi-glow testi-glow-2"></span>
+        <span className="testi-wisp"></span>
+        <span className="testi-wisp"></span>
+        <span className="testi-wisp"></span>
+        <span className="testi-wisp"></span>
+        <span className="testi-spark"></span>
+        <span className="testi-spark"></span>
+        <span className="testi-spark"></span>
+        <span className="testi-spark"></span>
+        <span className="testi-spark"></span>
+        <span className="testi-spark"></span>
+      </div>
+
       <div className="container">
         <div className={`section-head reveal ${headIn ? 'in-view' : ''}`} ref={headRef}>
           <span className="kicker">kind words</span>
@@ -244,6 +263,7 @@ export default function Testimonials() {
                         ) : (
                           <span className="testi-avatar-initials">{r.initials}</span>
                         )}
+                        <span className="testi-avatar-ring" aria-hidden="true"></span>
                       </span>
                       <span className="testi-person">
                         <strong>{r.name}</strong>

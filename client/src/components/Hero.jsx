@@ -161,6 +161,19 @@ export default function Hero() {
         <div className="hero-overlay"></div>
       </div>
 
+      <div className="hero-steam" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div className="hero-rays" aria-hidden="true">
+        <span></span>
+        <span></span>
+      </div>
+
       <div className="hero-fx" aria-hidden="true">
         {PARTICLES.map((n) => (
           <span key={n} style={{ '--i': n }}></span>

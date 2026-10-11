@@ -163,6 +163,23 @@ export default function WhyUs() {
       </div>
 
       <span className="why-spot" aria-hidden="true"></span>
+
+      <div className="why-ambient" aria-hidden="true">
+        <span className="why-amb-stain"></span>
+        <span className="why-amb-stain why-amb-stain-2"></span>
+        <span className="why-amb-glow"></span>
+        <span className="why-amb-glow why-amb-glow-2"></span>
+        <span className="why-amb-wisp"></span>
+        <span className="why-amb-wisp"></span>
+        <span className="why-amb-wisp"></span>
+        <span className="why-amb-wisp"></span>
+        <span className="why-amb-bean"></span>
+        <span className="why-amb-bean"></span>
+        <span className="why-amb-bean"></span>
+        <span className="why-amb-bean"></span>
+        <span className="why-amb-bean"></span>
+        <span className="why-amb-bean"></span>
+      </div>
     </section>
   );
 }

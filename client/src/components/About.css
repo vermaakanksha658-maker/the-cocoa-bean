@@ -38,6 +38,91 @@
   align-items: center;
 }
 
+/* ---------- Ambient: steam wisps + drifting beans ---------- */
+
+.about-ambient {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.about-wisp {
+  position: absolute;
+  bottom: -10%;
+  width: 38%;
+  height: 46%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(169, 113, 75, 0.26) 0%, rgba(169, 113, 75, 0.06) 60%, rgba(169, 113, 75, 0) 74%);
+  filter: blur(20px);
+  opacity: 0;
+  animation: aboutWisp 21s linear infinite;
+}
+
+.about-wisp:nth-child(1) { left: -5%;  animation-duration: 23s; animation-delay: 0s; }
+.about-wisp:nth-child(2) { left: 20%;  animation-duration: 27s; animation-delay: 5s; }
+.about-wisp:nth-child(3) { left: 46%;  animation-duration: 20s; animation-delay: 10s; }
+.about-wisp:nth-child(4) { left: 70%;  animation-duration: 25s; animation-delay: 14s; }
+
+@keyframes aboutWisp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 9vh, 0) scale(0.9);
+  }
+  25% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(6vw, -90%, 0) scale(1.35);
+  }
+}
+
+.about-bean {
+  position: absolute;
+  bottom: -22px;
+  width: 13px;
+  height: 9px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 32%, rgba(169, 113, 75, 0.5), rgba(169, 113, 75, 0.1));
+  animation: aboutBean 30s linear infinite;
+}
+
+.about-bean:nth-child(odd) {
+  width: 9px;
+  height: 13px;
+}
+
+.about-bean:nth-child(5)  { left: 6%;  animation-duration: 28s; animation-delay: 0s; }
+.about-bean:nth-child(6)  { left: 16%; animation-duration: 34s; animation-delay: 4s; }
+.about-bean:nth-child(7)  { left: 27%; animation-duration: 26s; animation-delay: 8s; }
+.about-bean:nth-child(8)  { left: 38%; animation-duration: 31s; animation-delay: 12s; }
+.about-bean:nth-child(9)  { left: 50%; animation-duration: 29s; animation-delay: 16s; }
+.about-bean:nth-child(10) { left: 62%; animation-duration: 33s; animation-delay: 20s; }
+.about-bean:nth-child(11) { left: 74%; animation-duration: 25s; animation-delay: 24s; }
+.about-bean:nth-child(12) { left: 87%; animation-duration: 30s; animation-delay: 6s; }
+
+@keyframes aboutBean {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  12% {
+    opacity: 0.9;
+  }
+  85% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(26px, -100vh, 0) rotate(300deg);
+  }
+}
+
 .section-pad.about {
   padding-bottom: 24px;
 }

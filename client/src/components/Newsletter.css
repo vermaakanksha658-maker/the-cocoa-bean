@@ -41,13 +41,38 @@
   pointer-events: none;
 }
 
-.news-cup {
+.news-cup-stage {
   position: absolute;
   right: 5%;
   bottom: -6%;
   width: 170px;
-  opacity: 0.5;
   z-index: 0;
+  perspective: 900px;
+  opacity: 0.6;
+}
+
+.news-cup-tilt {
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.45s ease-out;
+  animation: cupFloat 7s ease-in-out infinite;
+}
+
+.news-cup {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 16px 26px rgba(20, 12, 7, 0.4));
+}
+
+@keyframes cupFloat {
+  0%,
+  100% {
+    margin-top: 0;
+  }
+  50% {
+    margin-top: -12px;
+  }
 }
 
 .news-cup-steam {
@@ -410,11 +435,29 @@
   padding: 8px 0 4px;
 }
 
+.news-env-stage {
+  perspective: 700px;
+}
+
 .news-env {
+  display: block;
   width: 84px;
   height: 62px;
   margin: 0 auto 16px;
   color: var(--caramel);
+  transform-style: preserve-3d;
+  animation: newsEnvIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+@keyframes newsEnvIn {
+  from {
+    opacity: 0;
+    transform: perspective(700px) rotateX(-65deg) translateY(16px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(700px) rotateX(0deg) translateY(0) scale(1);
+  }
 }
 
 .news-env-body {
@@ -426,7 +469,26 @@
 .news-env-flap {
   stroke-dasharray: 96;
   stroke-dashoffset: 96;
-  animation: envDraw 0.6s 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform-origin: center top;
+  animation: envFlapOpen 0.7s 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes envFlapOpen {
+  0% {
+    opacity: 1;
+    transform: rotateX(0deg);
+    stroke-dashoffset: 96;
+  }
+  60% {
+    opacity: 1;
+    transform: rotateX(-145deg);
+    stroke-dashoffset: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: rotateX(-145deg);
+    stroke-dashoffset: 0;
+  }
 }
 
 .news-env-letter {

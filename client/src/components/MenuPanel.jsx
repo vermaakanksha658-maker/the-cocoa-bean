@@ -530,6 +530,17 @@ export default function MenuPanel({ variant = 'full', limit = 6 }) {
 
   return (
     <section id="menu" className="section-pad menu-section">
+      <div className="menu-ambient" aria-hidden="true">
+        <span className="menu-stain"></span>
+        <span className="menu-stain menu-stain-2"></span>
+        <span className="menu-glow"></span>
+        <span className="menu-glow menu-glow-2"></span>
+        <span className="menu-wisp"></span>
+        <span className="menu-wisp"></span>
+        <span className="menu-wisp"></span>
+        <span className="menu-wisp"></span>
+      </div>
+
       <div className="container">
         {isPreview && (
           <div className={`section-head reveal ${inView ? 'in-view' : ''}`} ref={ref}>

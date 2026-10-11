@@ -174,6 +174,25 @@ export default function Stats() {
 
   return (
     <section className="stats" aria-label="The Cocoa Bean in numbers">
+      <div className="stats-fx" aria-hidden="true">
+        <span className="stats-ripple"></span>
+        <span className="stats-ripple"></span>
+        <span className="stats-ripple"></span>
+        <span className="stats-steam"></span>
+        <span className="stats-steam"></span>
+        <span className="stats-steam"></span>
+        <span className="stats-steam"></span>
+        <span className="stats-steam"></span>
+        <span className="stats-bean"></span>
+        <span className="stats-bean"></span>
+        <span className="stats-bean"></span>
+        <span className="stats-bean"></span>
+        <span className="stats-bean"></span>
+        <span className="stats-bean"></span>
+        <span className="stats-bean"></span>
+        <span className="stats-bean"></span>
+      </div>
+
       <div className="container">
         <div className={`stats-inner ${entered ? 'stats-in-view' : ''}`} ref={ref}>
           <span className="kicker stats-kicker">the numbers say it</span>

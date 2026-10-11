@@ -8,6 +8,8 @@ const GUEST_OPTIONS = ['1', '2', '3', '4', '5', '6'];
 
 const HERO_IMG =
   'https://images.unsplash.com/photo-1498804103079-a6351b050096?fm=jpg&q=80&w=800&auto=format&fit=crop';
+const BG_IMG =
+  'https://images.unsplash.com/photo-1554118811-1e0d58224f24?fm=jpg&q=80&w=1600&auto=format&fit=crop';
 
 const TRUST = ['Instant confirmation', 'No prepayment', 'Free cancellation'];
 
@@ -21,6 +23,17 @@ function DoneCheck() {
       <circle className="reserve-check-circle" cx="26" cy="26" r="23" />
       <path className="reserve-check-mark" d="M15.5 27.5l7.8 7.8L37 20.5" />
     </svg>
+  );
+}
+
+function Confetti() {
+  const bits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  return (
+    <div className="reserve-confetti" aria-hidden="true">
+      {bits.map((i) => (
+        <span key={i} style={{ '--i': i }}></span>
+      ))}
+    </div>
   );
 }
 
@@ -201,6 +214,21 @@ export default function Reservation() {
 
   return (
     <section id="reserve" className="section-pad reserve">
+      <div className="reserve-bg" aria-hidden="true">
+        <div
+          className="reserve-bg-img"
+          style={{ backgroundImage: `url(${BG_IMG})` }}
+        ></div>
+        <div className="reserve-bg-wash"></div>
+        <span className="reserve-bg-glow"></span>
+        <span className="reserve-bg-glow reserve-bg-glow-2"></span>
+        <span className="reserve-bg-beans">
+          {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+            <span key={n} style={{ '--i': n }}></span>
+          ))}
+        </span>
+      </div>
+
       <div className="container reserve-grid">
         <div className={`reserve-intro reveal reveal-left ${inView ? 'in-view' : ''}`} ref={ref}>
           <img className="reserve-intro-img" src={HERO_IMG} alt="A reserved table by the roastery" loading="lazy" />
@@ -230,7 +258,10 @@ export default function Reservation() {
         <div className={`reserve-card reveal reveal-right ${inView ? 'in-view' : ''}`}>
           {state === 'done' ? (
             <div className="reserve-done">
-              <DoneCheck />
+              <div className="reserve-done-burst">
+                <Confetti />
+                <DoneCheck />
+              </div>
               <h3>You’re booked!</h3>
               <p>
                 Thanks {form.name.split(' ')[0]} — {form.guests} {form.guests === '1' ? 'guest' : 'guests'}{' '}
@@ -255,8 +286,10 @@ export default function Reservation() {
                     className={`reserve-step ${s.done ? 'reserve-step-done' : ''} ${i === stepIndex ? 'reserve-step-current' : ''}`}
                     key={s.key}
                   >
-                    <span className="reserve-step-badge">
-                      <StepIcon n={i + 1} state={s.done ? 'done' : 'idle'} />
+                    <span className={`reserve-step-badge ${s.done ? 'reserve-step-fresh' : ''}`} key={s.done ? 'done' : 'idle'}>
+                      <span className="reserve-step-face">
+                        <StepIcon n={i + 1} state={s.done ? 'done' : 'idle'} />
+                      </span>
                     </span>
                     <span className="reserve-step-label">{s.label}</span>
                   </div>
@@ -346,7 +379,13 @@ export default function Reservation() {
                           key={t}
                           className={`reserve-slot ${form.time === t ? 'reserve-slot-active' : ''} ${unavailable ? 'reserve-slot-taken' : ''}`}
                           disabled={unavailable}
-                          onClick={() => pickSlot(t)}
+                          onClick={(e) => {
+                            pickSlot(t);
+                            const btn = e.currentTarget;
+                            btn.classList.remove('reserve-slot-press');
+                            void btn.offsetWidth;
+                            btn.classList.add('reserve-slot-press');
+                          }}
                           aria-pressed={form.time === t}
                         >
                           {t}
