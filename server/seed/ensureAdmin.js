@@ -3,7 +3,7 @@ import Admin from '../models/Admin.js';
 
 export async function ensureAdmin() {
   const count = await Admin.countDocuments();
-  if (count > 0) return;
+  if (count > 0) return { exists: true };
 
   const username = process.env.ADMIN_USERNAME;
   const password = process.env.ADMIN_PASSWORD;
