@@ -192,7 +192,8 @@ export default function Navbar() {
           <Link to="/" className="logo" aria-label="Grand Restaurant & Cafe — home">
             <LogoMark />
             <span className="logo-text">
-              <span className="logo-script">Grand</span> Restaurant &amp; Cafe
+              <span className="logo-script">Grand</span>
+              <span className="logo-rest"> Restaurant &amp; Cafe</span>
             </span>
           </Link>
 

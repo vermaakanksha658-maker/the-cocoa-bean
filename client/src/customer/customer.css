@@ -473,4 +473,6 @@
 @media (max-width: 520px) {
   .cust-chip-name { display: none; }
   .cust-chip { padding: 6px; }
+  .cust-login-btn { padding: 7px 12px; font-size: 0.82rem; }
+  .nav-right .cust-login-btn { margin-right: 2px; }
 }

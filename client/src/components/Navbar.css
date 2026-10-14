@@ -663,8 +663,8 @@
     height: 16px;
   }
 
-  .nav-right {
-    gap: 10px;
+  .logo-rest {
+    display: none;
   }
 }
 
