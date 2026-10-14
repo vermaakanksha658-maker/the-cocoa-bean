@@ -21,8 +21,11 @@
   animation: preFloat 2.4s ease-in-out infinite;
 }
 
-.pre-cup {
-  font-size: 2.6rem;
+.pre-crown {
+  width: 60px;
+  height: 60px;
+  display: block;
+  filter: drop-shadow(0 4px 14px rgba(201, 162, 39, 0.35));
 }
 
 @keyframes preFloat {

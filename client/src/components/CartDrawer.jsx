@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useCart } from '../context/CartContext.jsx';
+import { useCustomer } from '../customer/useCustomer.jsx';
 import { useToast } from '../context/ToastContext.jsx';
 import './Cart.css';
 
@@ -7,31 +8,61 @@ const emptyItems = { name: '', phone: '' };
 
 export default function CartDrawer() {
   const { items, setQty, remove, clear, count, total, open, closeCart } = useCart();
+  const { customer, openAuth, beginPending, loginWithGoogle } = useCustomer();
   const toast = useToast();
   const [form, setForm] = useState(emptyItems);
   const [phase, setPhase] = useState('form'); // form | submitting | done
   const [error, setError] = useState('');
+  const formRef = useRef(form);
+  const linesRef = useRef(Object.values(items));
+  const custRef = useRef(customer);
 
   const lines = Object.values(items);
 
+  useEffect(() => {
+    formRef.current = form;
+  }, [form]);
+  useEffect(() => {
+    linesRef.current = Object.values(items);
+  }, [items]);
+  useEffect(() => {
+    custRef.current = customer;
+  }, [customer]);
+
+  // Pre-fill name/phone from the account once logged in.
+  useEffect(() => {
+    if (!customer) return;
+    setForm((f) => ({
+      ...f,
+      name: f.name || customer.name || '',
+      phone: f.phone || customer.phone || '',
+    }));
+  }, [customer]);
+
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
 
-  const checkout = async (e) => {
-    e.preventDefault();
-    if (lines.length === 0) return;
+  const submitOrder = async (values) => {
+    if (linesRef.current.length === 0) return;
     setPhase('submitting');
     setError('');
     try {
       const res = await fetch('/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({
-          name: form.name.trim(),
-          phone: form.phone.trim(),
-          items: lines.map((i) => ({ menuItem: i.id, qty: i.qty })),
+          name: values.name.trim(),
+          phone: values.phone.trim(),
+          items: linesRef.current.map((i) => ({ menuItem: i.id, qty: i.qty })),
         }),
       });
       const data = await res.json().catch(() => ({}));
+      if (res.status === 401) {
+        setPhase('form');
+        beginPending('order');
+        openAuth({ tab: 'login', reason: 'Login to place your order' });
+        return;
+      }
       if (!res.ok) throw new Error(data.message || 'Could not place the order right now.');
       setPhase('done');
       toast.push(`Order placed — ${data.total ? `₹${data.total}` : ''} — we’ll confirm shortly!`, 'success');
@@ -40,6 +71,37 @@ export default function CartDrawer() {
       setError(err.message);
     }
   };
+
+  const checkout = (e) => {
+    e.preventDefault();
+    const f = formRef.current;
+    if (!f.name.trim() || !f.phone.trim()) {
+      setError('Please add your name and phone number.');
+      return;
+    }
+    if (!customer) {
+      beginPending('order');
+      openAuth({ tab: 'login', reason: 'Login to place your order' });
+      return;
+    }
+    submitOrder(f);
+  };
+
+  // Continue a pending order after login (including the Google redirect return).
+  useEffect(() => {
+    const onContinue = (e) => {
+      if (e.detail?.type !== 'order') return;
+      if (linesRef.current.length === 0) return;
+      const f = formRef.current;
+      const c = custRef.current;
+      const name = f.name.trim() || (c?.name || '');
+      const phone = f.phone.trim() || (c?.phone || '');
+      if (!name || !phone) return;
+      submitOrder({ name, phone });
+    };
+    window.addEventListener('cb:continue', onContinue);
+    return () => window.removeEventListener('cb:continue', onContinue);
+  }, []);
 
   const reset = () => {
     clear();
@@ -69,6 +131,13 @@ export default function CartDrawer() {
               Your order for {count} {count === 1 ? 'item' : 'items'} (₹{total}) is with us. We’ll
               call you shortly to confirm.
             </p>
+            {customer && (
+              <p style={{ marginBottom: 12 }}>
+                <a href="/my-orders" className="cust-auth-switch" style={{ color: 'var(--caramel)' }}>
+                  View your order history →
+                </a>
+              </p>
+            )}
             <button className="btn btn-primary cart-done-btn" onClick={reset}>
               Keep browsing
             </button>
@@ -124,6 +193,29 @@ export default function CartDrawer() {
                 <span>Total</span>
                 <strong>₹{total}</strong>
               </div>
+
+              {!customer && (
+                <div className="cart-login-nudge">
+                  <p>Login to place your order</p>
+                  <span>Your name and phone fill in automatically, and every order is saved to your history.</span>
+                  <div className="cart-login-nudge-actions">
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={() => {
+                        beginPending('order');
+                        openAuth({ tab: 'login', reason: 'Login to place your order' });
+                      }}
+                    >
+                      Login
+                    </button>
+                    <button type="button" className="btn btn-ghost" onClick={() => loginWithGoogle('order')}>
+                      Continue with Google
+                    </button>
+                  </div>
+                </div>
+              )}
+
               <div className="cart-fields">
                 <input
                   type="text"
@@ -145,7 +237,11 @@ export default function CartDrawer() {
               </div>
               {error && <p className="cart-error">{error}</p>}
               <button type="submit" className="btn btn-primary cart-order-btn" disabled={phase === 'submitting'}>
-                {phase === 'submitting' ? 'Placing order…' : `Place order · ₹${total}`}
+                {phase === 'submitting'
+                  ? 'Placing order…'
+                  : customer
+                    ? `Place order · ₹${total}`
+                    : `Login to order · ₹${total}`}
               </button>
               <p className="cart-note">Pay at the counter when you arrive.</p>
             </form>

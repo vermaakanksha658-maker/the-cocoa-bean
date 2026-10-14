@@ -16,6 +16,15 @@ export async function apiRequest(url, options = {}) {
   if (!res.ok) {
     const err = new Error(data.message || `Request failed (${res.status})`);
     err.status = res.status;
+    if (
+      res.status === 401 &&
+      url.startsWith('/api/admin/') &&
+      !url.includes('/api/admin/login') &&
+      typeof window !== 'undefined' &&
+      !window.location.pathname.startsWith('/admin/login')
+    ) {
+      window.location.replace('/admin/login');
+    }
     throw err;
   }
   return data;

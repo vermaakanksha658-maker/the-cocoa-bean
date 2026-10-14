@@ -4,7 +4,7 @@ import './Newsletter.css';
 
 const perks = [
   {
-    label: 'Weekly roast drops',
+    label: 'Weekly treats & updates',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true">
         <ellipse cx="12" cy="12" rx="6.4" ry="9.4" transform="rotate(-18 12 12)" />
@@ -34,10 +34,10 @@ const perks = [
 ];
 
 const avatars = [
-  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fm=jpg&q=80&w=120&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1544005313-94ddf0286df2?fm=jpg&q=80&w=120&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=80&w=120&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?fm=jpg&q=80&w=120&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?fm=jpg&q=80&w=120&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?fm=jpg&q=80&w=120&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?fm=jpg&q=80&w=120&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?fm=jpg&q=80&w=120&auto=format&fit=crop',
 ];
 
 const BEANS = [1, 2, 3, 4, 5, 6, 7, 8];
@@ -170,8 +170,8 @@ export default function Newsletter() {
           <span className="kicker news-kicker">stay close</span>
           <h2 className="section-title news-title">Fresh Brew News, Straight to You</h2>
           <p className="news-sub">
-            Drop your email — we’ll save you a corner seat and share weekly roasts, new bakes and the
-            occasional free-coffee surprise.
+            Drop your email — we’ll share new dishes, combo offers and the
+            occasional table-side surprise.
           </p>
 
           <ul className="news-perks">
@@ -190,7 +190,7 @@ export default function Newsletter() {
               ))}
             </span>
             <span className="news-proof-text">
-              <strong>2,400+</strong> coffee lovers already subscribed
+              Join our list for <strong>new dishes</strong>, combos &amp; offers
             </span>
           </div>
         </div>

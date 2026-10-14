@@ -4,62 +4,62 @@ import './Gallery.css';
 
 const shots = [
   {
-    src: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?fm=jpg&q=80&w=900&auto=format&fit=crop',
+    src: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?fm=jpg&q=80&w=900&auto=format&fit=crop',
     caption: 'Morning light inside',
     tag: 'Cozy',
   },
   {
-    src: 'https://images.unsplash.com/photo-1521017432531-fbd92d768814?fm=jpg&q=80&w=900&auto=format&fit=crop',
+    src: 'https://images.unsplash.com/photo-1552566626-52f8b828add9?fm=jpg&q=80&w=900&auto=format&fit=crop',
     caption: 'Corner seat, warm lamp',
     tag: 'Cozy',
   },
   {
-    src: 'https://images.unsplash.com/photo-1770123024494-776bc2d3836b?fm=jpg&q=80&w=900&auto=format&fit=crop',
+    src: 'https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?fm=jpg&q=80&w=900&auto=format&fit=crop',
     caption: 'Poured with love',
     tag: 'Coffee',
   },
   {
-    src: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?fm=jpg&q=80&w=900&auto=format&fit=crop',
-    caption: 'Golden latte art',
+    src: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?fm=jpg&q=80&w=900&auto=format&fit=crop',
+    caption: 'Golden hour in our dining room',
     tag: 'Coffee',
   },
   {
-    src: 'https://images.unsplash.com/photo-1759566926659-b1a9ec89cc82?fm=jpg&q=80&w=900&auto=format&fit=crop',
+    src: 'https://images.unsplash.com/photo-1514933651103-005eec06c04b?fm=jpg&q=80&w=900&auto=format&fit=crop',
     caption: 'Golden pastries',
     tag: 'Pastries',
   },
   {
-    src: 'https://images.unsplash.com/photo-1757010055832-de355d2f8f06?fm=jpg&q=80&w=900&auto=format&fit=crop',
+    src: 'https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?fm=jpg&q=80&w=900&auto=format&fit=crop',
     caption: 'Warm lighting',
     tag: 'Coffee',
   },
   {
-    src: 'https://images.unsplash.com/photo-1484723091739-30a097e8f929?fm=jpg&q=80&w=900&auto=format&fit=crop',
+    src: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?fm=jpg&q=80&w=900&auto=format&fit=crop',
     caption: 'Slow breakfast plate',
     tag: 'Food',
   },
   {
-    src: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?fm=jpg&q=80&w=900&auto=format&fit=crop',
+    src: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?fm=jpg&q=80&w=900&auto=format&fit=crop',
     caption: 'Fresh from the oven',
     tag: 'Pastries',
   },
   {
-    src: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?fm=jpg&q=80&w=900&auto=format&fit=crop',
+    src: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?fm=jpg&q=80&w=900&auto=format&fit=crop',
     caption: 'Baked early morning',
     tag: 'Pastries',
   },
   {
-    src: 'https://images.unsplash.com/photo-1519676867240-f03562e64548?fm=jpg&q=80&w=900&auto=format&fit=crop',
+    src: 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?fm=jpg&q=80&w=900&auto=format&fit=crop',
     caption: 'Brunch table',
     tag: 'Food',
   },
   {
-    src: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?fm=jpg&q=80&w=900&auto=format&fit=crop',
+    src: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?fm=jpg&q=80&w=900&auto=format&fit=crop',
     caption: 'Our daily spread',
     tag: 'Food',
   },
   {
-    src: 'https://images.unsplash.com/photo-1777451441095-c7ef2f875929?fm=jpg&q=80&w=900&auto=format&fit=crop',
+    src: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?fm=jpg&q=80&w=900&auto=format&fit=crop',
     caption: 'Plant-filled corners',
     tag: 'Cozy',
   },
@@ -97,10 +97,19 @@ function SocialIcon({ kind }) {
       </svg>
     );
   }
-  if (kind === 'facebook') {
+  if (kind === 'youtube') {
     return (
       <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" aria-hidden="true">
-        <path d="M14.5 8.5V6.8c0-.8.5-1.3 1.4-1.3H17.5V2.6h-2.4c-2.5 0-4 1.5-4 4v1.9H8.5v3h2.6v9.9h3.4v-9.9h2.7l.6-3z" />
+        <path d="M22.5 8.4a3 3 0 0 0-2.1-2.1C18.7 5.8 12 5.8 12 5.8s-6.7 0-8.4.5A3 3 0 0 0 1.5 8.4C1 10.2 1 12 1 12s0 1.8.5 3.6a3 3 0 0 0 2.1 2.1c1.7.5 8.4.5 8.4.5s6.7 0 8.4-.5a3 3 0 0 0 2.1-2.1c.5-1.8.5-3.6.5-3.6s0-1.8-.5-3.6z" />
+        <path d="M10 8.8l6 3.2-6 3.2z" fill="currentColor" stroke="none" />
+      </svg>
+    );
+  }
+  if (kind === 'maps') {
+    return (
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M12 21.2s7-6.4 7-11.2a7 7 0 1 0-14 0c0 4.8 7 11.2 7 11.2z" />
+        <circle cx="12" cy="10" r="2.6" />
       </svg>
     );
   }
@@ -299,7 +308,7 @@ export default function Gallery() {
       <div className="container">
         <div className={`section-head reveal ${headIn ? 'in-view' : ''}`} ref={headRef}>
           <span className="kicker">a peek inside</span>
-          <h2 className="section-title">Moments at The Cocoa Bean</h2>
+          <h2 className="section-title">Moments at Grand Restaurant &amp; Cafe</h2>
           <div className="divider"></div>
         </div>
 
@@ -379,17 +388,17 @@ export default function Gallery() {
 
       <div className="container">
         <div className="gallery-social">
-          <span className="gallery-handle">@thecocoabean</span>
-          <span className="gallery-note">Tag us in your cup — we repost our favourites</span>
+          <span className="gallery-handle">@aliganjcafe</span>
+          <span className="gallery-note">Tag us in your posts — we love sharing your moments</span>
           <span className="gallery-links">
-            <a href="https://www.instagram.com/" target="_blank" rel="noreferrer" aria-label="Instagram">
+            <a href="https://www.instagram.com/aliganjcafe/" target="_blank" rel="noreferrer" aria-label="Instagram">
               <SocialIcon kind="instagram" />
             </a>
-            <a href="https://www.facebook.com/" target="_blank" rel="noreferrer" aria-label="Facebook">
-              <SocialIcon kind="facebook" />
+            <a href="https://www.youtube.com/@Aliganjgrandcafe" target="_blank" rel="noreferrer" aria-label="YouTube">
+              <SocialIcon kind="youtube" />
             </a>
-            <a href="https://x.com/" target="_blank" rel="noreferrer" aria-label="X">
-              <SocialIcon kind="x" />
+            <a href="https://maps.app.goo.gl/SttwDLxifUXjGwUZ9" target="_blank" rel="noreferrer" aria-label="Google Maps">
+              <SocialIcon kind="maps" />
             </a>
           </span>
         </div>

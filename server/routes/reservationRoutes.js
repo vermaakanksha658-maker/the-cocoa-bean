@@ -1,6 +1,7 @@
 import express from 'express';
 import Reservation from '../models/Reservation.js';
 import { requireAdmin } from '../middleware/auth.js';
+import { requireCustomer } from '../middleware/customerAuth.js';
 
 const router = express.Router();
 
@@ -21,7 +22,7 @@ router.get('/slots', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', requireCustomer, async (req, res) => {
   try {
     const { date, time } = req.body || {};
     if (date && time) {
@@ -32,7 +33,11 @@ router.post('/', async (req, res) => {
           .json({ message: 'Just missed it — that time slot was just booked. Please pick another time.' });
       }
     }
-    const reservation = await Reservation.create({ ...req.body, status: 'pending' });
+    const reservation = await Reservation.create({
+      ...req.body,
+      status: 'pending',
+      user: req.customer ? req.customer.id : null,
+    });
     res.status(201).json(reservation);
   } catch (error) {
     res.status(400).json({ message: error.message });

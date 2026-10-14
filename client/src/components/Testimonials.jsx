@@ -4,31 +4,46 @@ import './Testimonials.css';
 
 const fallbackReviews = [
   {
-    _id: 'f1',
-    name: 'Aarav Mehta',
-    role: 'Regular since 2019',
-    text: 'The pour over tastes like a small ceremony. Easily the most elegant café in the city.',
-    initials: 'AM',
-    photo:
-      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fm=jpg&q=80&w=300&auto=format&fit=crop',
+    _id: 'g1',
+    name: 'Alice Newton',
+    role: 'Google Review · Local Guide',
+    text: 'Had a wonderful experience at Aliganj Grand! The ambience is beautiful and elegant, the food was delicious, and the presentation was impressive. The staff was very courteous and attentive, which made the whole experience even better.',
+    initials: 'AN',
   },
   {
-    _id: 'f2',
-    name: 'Ishita Sharma',
-    role: 'Work & study corner',
-    text: 'Cozy lighting, soft music and the golden mocha — my writing spot forever.',
-    initials: 'IS',
-    photo:
-      'https://images.unsplash.com/photo-1544005313-94ddf0286df2?fm=jpg&q=80&w=300&auto=format&fit=crop',
+    _id: 'g2',
+    name: 'Anshu Singh',
+    role: 'Google Review',
+    text: 'Restaurant ka khaana aur service bahut acchi, maza aaya. And rate mai bi best.',
+    initials: 'AS',
   },
   {
-    _id: 'f3',
-    name: 'Rohan Kapoor',
-    role: 'Coffee enthusiast',
-    text: 'You can taste the care in every roast. The croissants keep me coming back.',
-    initials: 'RK',
-    photo:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=80&w=300&auto=format&fit=crop',
+    _id: 'g3',
+    name: 'Nisha Chaudhary',
+    role: 'Google Review · Local Guide',
+    text: 'Ambiance & food is good, staff & service also good. Must visit!',
+    initials: 'NC',
+  },
+  {
+    _id: 'g4',
+    name: 'Kryptiqq',
+    role: 'Google Review · Local Guide',
+    text: 'Good place for small parties.',
+    initials: 'KR',
+  },
+  {
+    _id: 'g5',
+    name: 'Arpit Singh',
+    role: 'Google Review',
+    text: 'The tandoori items were almost good and have the smoky flavour.',
+    initials: 'AS',
+  },
+  {
+    _id: 'g6',
+    name: 'Khushbu Gautam',
+    role: 'Google Review',
+    text: 'Tasty food and enjoy a lot — visit again and again.',
+    initials: 'KG',
   },
 ];
 

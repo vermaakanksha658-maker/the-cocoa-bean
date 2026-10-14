@@ -3,32 +3,32 @@ import useInView from '../hooks/useInView.js';
 import './About.css';
 
 const MAIN_IMG =
-  'https://images.unsplash.com/photo-1757010055832-de355d2f8f06?fm=jpg&q=80&w=900&auto=format&fit=crop';
+  'https://images.unsplash.com/photo-1600891964092-4316c288032e?fm=jpg&q=80&w=900&auto=format&fit=crop';
 const POLAROID_IMG =
-  'https://images.unsplash.com/photo-1442550528053-c431ecb55509?fm=jpg&q=80&w=600&auto=format&fit=crop';
+  'https://images.unsplash.com/photo-1585937421612-70a008356fbe?fm=jpg&q=80&w=600&auto=format&fit=crop';
 const FOUNDER_IMG =
-  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fm=jpg&q=80&w=400&auto=format&fit=crop';
+  'https://images.unsplash.com/photo-1514933651103-005eec06c04b?fm=jpg&q=80&w=400&auto=format&fit=crop';
 
 const LIST = [
-  'Single-origin beans, roasted in-house',
-  'House-baked pastries & desserts daily',
-  'Hand-poured drinks, made-to-order',
+  'Fresh food, cooked to order',
+  'Handcrafted drinks & desserts',
+  'A warm room for every occasion',
 ];
 
 const TIMELINE = [
-  { year: '2013', text: 'A tiny corner counter opens with one espresso machine' },
-  { year: '2018', text: 'First in-house roaster, and the morning bakery begins' },
-  { year: '2022', text: 'A second shop, and our beans reach other cafes' },
-  { year: 'Now', text: 'Still pouring every single cup by hand' },
+  { year: 'Daily', text: 'Fresh cooking, every single day' },
+  { year: 'Always', text: 'Handcrafted drinks, made to order' },
+  { year: 'For all', text: 'A table for every occasion — family, friends, celebrations' },
+  { year: 'Now', text: 'Serving Lucknow with warmth' },
 ];
 
 const STATS = [
-  { value: 12, suffix: ' yrs', label: 'of brewing' },
-  { value: 30, suffix: '+', label: 'single origins' },
-  { value: 100, suffix: '%', label: 'roasted in-house' },
+  { value: 100, suffix: '%', label: 'made with care' },
+  { value: 1, suffix: '', label: 'warm welcome, every time' },
+  { value: 100, suffix: '%', label: 'hospitality, always' },
 ];
 
-const MARQUEE_WORDS = ['Single origin', 'Baked daily', 'Hand poured', 'Slow roasted', 'Shared warm'];
+const MARQUEE_WORDS = ['Fresh daily', 'Made to order', 'Family friendly', 'Celebrations', 'Served warm'];
 
 function prefersReducedMotion() {
   return typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
@@ -228,26 +228,26 @@ export default function About() {
                 <div className="about-polaroid-face about-polaroid-front">
                   <img
                     src={POLAROID_IMG}
-                    alt="Freshly roasted coffee beans"
+                    alt="A table full of fresh food at Grand Restaurant & Cafe"
                     loading="lazy"
                   />
-                  <span className="about-polaroid-cap">Freshly roasted</span>
+                  <span className="about-polaroid-cap">Cooked fresh daily</span>
                 </div>
                 <div className="about-polaroid-face about-polaroid-back">
                   <span className="about-polaroid-back-cap">
                     <BeanIcon className="about-polaroid-back-icon" />
-                    Roasted every Monday
+                    Made to order
                   </span>
                 </div>
               </div>
             </div>
 
             <div className="about-badge">
-              <span className="about-badge-num">12</span>
+              <span className="about-badge-num">4.9</span>
               <span>
-                Years of
+                Google
                 <br />
-                Brewing
+                Rating
               </span>
             </div>
           </div>
@@ -257,14 +257,14 @@ export default function About() {
             onMouseMove={onFounderMove}
             onMouseLeave={onFounderLeave}
           >
-            <img className="about-founder-img" src={FOUNDER_IMG} alt="Aarav Menon, founder and head roaster" loading="lazy" />
+            <img className="about-founder-img" src={FOUNDER_IMG} alt="Our team at Grand Restaurant & Cafe" loading="lazy" />
             <div className="about-founder-body">
               <p className="about-founder-quote">
-                &ldquo;We still roast every batch the way we did on day one — slowly, and by hand.&rdquo;
+                &ldquo;Good Food. Good Mood. Great Memories. — that is the promise behind every plate we serve.&rdquo;
               </p>
               <p className="about-founder-name">
-                Aarav Menon
-                <span>Founder &amp; Head Roaster</span>
+                Our Team
+                <span>Grand Restaurant &amp; Cafe</span>
               </p>
             </div>
           </div>
@@ -272,15 +272,14 @@ export default function About() {
 
         <div className={`about-text reveal reveal-right ${rightIn ? 'in-view' : ''}`} ref={rightRef}>
           <span className="kicker">our story</span>
-          <h2 className="section-title">A Cup That Tastes Like Home</h2>
+          <h2 className="section-title">A Table That Feels Like Home</h2>
           <blockquote className="about-quote">
-            Coffee should be slow, thoughtful and shared.
+            Good food should be warm, generous and shared.
           </blockquote>
           <p className="about-para">
-            The Cocoa Bean began as a tiny corner counter with a single espresso machine and a big
-            belief. Today we <mark className="about-hl">roast our own beans</mark>,{' '}
-            <mark className="about-hl">bake every morning</mark>, and pour every drink with the care of a
-            handwritten letter.
+            Grand Restaurant &amp; Cafe brings together fresh cooking, handcrafted drinks and warm
+            hospitality under one roof — a place in Lucknow where{' '}
+            <mark className="about-hl">every meal feels like a celebration</mark>.
           </p>
 
           <a href="#menu" className="btn btn-primary about-btn">

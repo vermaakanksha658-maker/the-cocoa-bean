@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext.jsx';
+import { useCustomer } from '../customer/useCustomer.jsx';
 import useOpenStatus from '../hooks/useOpenStatus.js';
 import './Navbar.css';
 
@@ -12,17 +13,20 @@ const links = [
 ];
 
 function LogoMark() {
-  const bean = (
-    <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true">
-      <ellipse cx="12" cy="12" rx="6.4" ry="9.4" transform="rotate(-18 12 12)" />
-      <path d="M9.5 3.8c3.1 4.1 3.1 12.3 5.1 16.4" />
+  const crown = (
+    <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M4 17.2 5.4 9l3.4 3.2L12 5.6l3.2 6.6L18.6 9 20 17.2H4z" />
+      <path d="M3.4 19.4h17.2" />
+      <circle cx="12" cy="4.2" r="0.9" fill="currentColor" stroke="none" />
+      <circle cx="5.4" cy="8" r="0.8" fill="currentColor" stroke="none" />
+      <circle cx="18.6" cy="8" r="0.8" fill="currentColor" stroke="none" />
     </svg>
   );
 
   return (
     <span className="logo-mark" aria-hidden="true">
-      <span className="logo-mark-face logo-mark-front">{bean}</span>
-      <span className="logo-mark-face logo-mark-back">{bean}</span>
+      <span className="logo-mark-face logo-mark-front">{crown}</span>
+      <span className="logo-mark-face logo-mark-back">{crown}</span>
     </span>
   );
 }
@@ -69,8 +73,27 @@ export default function Navbar() {
   const location = useLocation();
   const onMenu = location.pathname === '/menu';
   const { count, openCart } = useCart();
+  const { customer, openAuth, logout } = useCustomer();
+  const [custMenuOpen, setCustMenuOpen] = useState(false);
+  const custWrapRef = useRef(null);
   const status = useOpenStatus();
   const listRef = useRef(null);
+
+  useEffect(() => {
+    if (!custMenuOpen) return undefined;
+    const onDown = (e) => {
+      if (!custWrapRef.current?.contains(e.target)) setCustMenuOpen(false);
+    };
+    const onKey = (e) => e.key === 'Escape' && setCustMenuOpen(false);
+    document.addEventListener('mousedown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDown);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [custMenuOpen]);
+
+  const initials = (customer?.name || 'G').trim().slice(0, 2).toUpperCase();
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
@@ -166,10 +189,10 @@ export default function Navbar() {
         </span>
 
         <div className="container navbar-inner">
-          <Link to="/" className="logo" aria-label="The Cocoa Bean — home">
+          <Link to="/" className="logo" aria-label="Grand Restaurant & Cafe — home">
             <LogoMark />
             <span className="logo-text">
-              <span className="logo-script">the</span> Cocoa Bean
+              <span className="logo-script">Grand</span> Restaurant &amp; Cafe
             </span>
           </Link>
 
@@ -200,6 +223,22 @@ export default function Navbar() {
 
             {open && (
               <li className="nav-drawer-info" style={{ '--i': 4 }}>
+                {customer ? (
+                  <Link to="/my-orders" className="nav-drawer-reserve" onClick={() => setOpen(false)}>
+                    My orders · {customer.name.split(' ')[0]}
+                  </Link>
+                ) : (
+                  <button
+                    type="button"
+                    className="nav-drawer-reserve"
+                    onClick={() => {
+                      setOpen(false);
+                      openAuth({ tab: 'login' });
+                    }}
+                  >
+                    Login / Register
+                  </button>
+                )}
                 <a
                   href="/#reserve"
                   className="nav-drawer-reserve"
@@ -229,6 +268,65 @@ export default function Navbar() {
           </ul>
 
           <div className="nav-right">
+            {customer ? (
+              <div className="cust-chip-wrap" ref={custWrapRef} style={{ position: 'relative' }}>
+                <button
+                  className="cust-chip"
+                  onClick={() => setCustMenuOpen((v) => !v)}
+                  aria-expanded={custMenuOpen}
+                  aria-haspopup="menu"
+                  aria-label="Your account"
+                >
+                  <span className="cust-avatar">{initials}</span>
+                  <span className="cust-chip-name">{customer.name.split(' ')[0]}</span>
+                </button>
+                {custMenuOpen && (
+                  <div className="cust-menu" role="menu">
+                    <div className="cust-menu-head">
+                      <span className="cust-menu-name">{customer.name}</span>
+                      <span className="cust-menu-mail">{customer.email}</span>
+                      {!customer.emailVerified && (
+                        <span className="cust-verify-note">
+                          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 16v-4M12 8h.01" />
+                          </svg>
+                          Email not verified
+                        </span>
+                      )}
+                    </div>
+                    <Link to="/my-orders" className="cust-menu-item" onClick={() => setCustMenuOpen(false)} role="menuitem">
+                      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                        <path d="M3 6h18" />
+                        <path d="M16 10a4 4 0 0 1-8 0" />
+                      </svg>
+                      My orders
+                    </Link>
+                    <button
+                      className="cust-menu-item"
+                      role="menuitem"
+                      onClick={() => {
+                        setCustMenuOpen(false);
+                        logout();
+                      }}
+                    >
+                      <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        <path d="m16 17 5-5-5-5" />
+                        <path d="M21 12H9" />
+                      </svg>
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <button className="cust-login-btn" onClick={() => openAuth({ tab: 'login' })}>
+                Login
+              </button>
+            )}
+
             <button
               className="theme-toggle"
               onClick={() => setDark(!dark)}

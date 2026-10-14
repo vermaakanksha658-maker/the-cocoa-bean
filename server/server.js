@@ -11,6 +11,7 @@ import reservationRoutes from './routes/reservationRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import reviewRoutes from './routes/reviewRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api/admin', adminRoutes);
+app.use('/api/auth', authRoutes);
 app.use('/api/menu', menuRoutes);
 app.use('/api/reservations', reservationRoutes);
 app.use('/api/orders', orderRoutes);

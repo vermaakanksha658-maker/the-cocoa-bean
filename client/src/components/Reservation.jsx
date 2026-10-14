@@ -1,15 +1,18 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import useInView from '../hooks/useInView.js';
+import { useCustomer } from '../customer/useCustomer.jsx';
 import './Reservation.css';
 
-const initial = { name: '', phone: '', date: '', time: '', guests: '2' };
+const initial = { name: '', phone: '', date: '', time: '', guests: '2', occasion: '' };
 
 const GUEST_OPTIONS = ['1', '2', '3', '4', '5', '6'];
 
+const OCCASIONS = ['Family dining', 'Birthday', 'Kitty party', 'Corporate', 'Coffee date'];
+
 const HERO_IMG =
-  'https://images.unsplash.com/photo-1498804103079-a6351b050096?fm=jpg&q=80&w=800&auto=format&fit=crop';
+  'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?fm=jpg&q=80&w=800&auto=format&fit=crop';
 const BG_IMG =
-  'https://images.unsplash.com/photo-1554118811-1e0d58224f24?fm=jpg&q=80&w=1600&auto=format&fit=crop';
+  'https://images.unsplash.com/photo-1544148103-0773bf10d330?fm=jpg&q=80&w=1600&auto=format&fit=crop';
 
 const TRUST = ['Instant confirmation', 'No prepayment', 'Free cancellation'];
 
@@ -49,6 +52,7 @@ function StepIcon({ n, state }) {
 }
 
 export default function Reservation() {
+  const { customer, openAuth, beginPending } = useCustomer();
   const [form, setForm] = useState(initial);
   const [state, setState] = useState('idle'); // idle | loading | done | error
   const [slots, setSlots] = useState([]);
@@ -58,11 +62,27 @@ export default function Reservation() {
   const [formError, setFormError] = useState('');
   const [ref, inView] = useInView();
   const prevDate = useRef('');
+  const formRef = useRef(form);
+  const submitRef = useRef(null);
 
   const set = (k) => (e) => {
     setForm({ ...form, [k]: e.target.value });
     if (formError) setFormError('');
   };
+
+  useEffect(() => {
+    formRef.current = form;
+  }, [form]);
+
+  // Pre-fill name/phone from the account once logged in.
+  useEffect(() => {
+    if (!customer) return;
+    setForm((f) => ({
+      ...f,
+      name: f.name || customer.name || '',
+      phone: f.phone || customer.phone || '',
+    }));
+  }, [customer]);
 
   useEffect(() => {
     if (!form.date) {
@@ -100,7 +120,7 @@ export default function Reservation() {
   }, [form.date]);
 
   const submit = async (e) => {
-    e.preventDefault();
+    e?.preventDefault();
 
     if (state === 'loading') return;
 
@@ -123,6 +143,12 @@ export default function Reservation() {
               : '.reserve-slots'
       );
       if (firstEmpty) firstEmpty.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    if (!customer) {
+      beginPending('reservation');
+      openAuth({ tab: 'login', reason: 'Login to reserve your table' });
       return;
     }
 
@@ -155,6 +181,20 @@ export default function Reservation() {
     setSlotError('');
     setFormError('');
   };
+
+  // Keep refs fresh so the pending-continue listener always sees latest state.
+  useEffect(() => {
+    submitRef.current = submit;
+  });
+
+  // Auto-submit the stored booking once the customer is logged in.
+  useEffect(() => {
+    const onContinue = (e) => {
+      if (e.detail?.type === 'reservation') submitRef.current?.();
+    };
+    window.addEventListener('cb:continue', onContinue);
+    return () => window.removeEventListener('cb:continue', onContinue);
+  }, []);
 
   const takenTimes = useMemo(() => new Set(takenArr), [takenArr]);
   const selectedTaken = form.time && takenTimes.has(form.time);
@@ -231,12 +271,12 @@ export default function Reservation() {
 
       <div className="container reserve-grid">
         <div className={`reserve-intro reveal reveal-left ${inView ? 'in-view' : ''}`} ref={ref}>
-          <img className="reserve-intro-img" src={HERO_IMG} alt="A reserved table by the roastery" loading="lazy" />
+          <img className="reserve-intro-img" src={HERO_IMG} alt="A reserved table at Grand Restaurant & Cafe" loading="lazy" />
           <span className="kicker">save your seat</span>
           <h2 className="section-title reserve-title">Reserve a Corner</h2>
           <p className="reserve-sub">
-            A quiet table by the window, or a spot close to the roastery — tell us when and we’ll keep
-            the kettle warm.
+            A quiet table for family dinners, or a lively corner for celebrations — tell us when and we&rsquo;ll
+            keep the welcome warm.
           </p>
           <ul className="reserve-trust">
             {TRUST.map((t) => (
@@ -280,6 +320,25 @@ export default function Reservation() {
             </div>
           ) : (
             <form className="reserve-form" onSubmit={submit} noValidate>
+              <div className={`reserve-login-note ${customer ? 'is-in' : ''}`}>
+                {customer ? (
+                  <span>
+                    Booking as <strong>{customer.name}</strong>
+                    {customer.phone ? ` · ${customer.phone}` : ''}
+                  </span>
+                ) : (
+                  <>
+                    <span>Login to reserve — your name and phone fill in automatically.</span>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={() => openAuth({ tab: 'login', reason: 'Login to reserve your table' })}
+                    >
+                      Login
+                    </button>
+                  </>
+                )}
+              </div>
               <div className="reserve-steps" aria-label="Booking progress">
                 {steps.map((s, i) => (
                   <div
@@ -432,7 +491,26 @@ export default function Reservation() {
                       <span>{n}</span>
                     </button>
                   ))}
-                  <span className="reserve-guests-hint">6+? Call us</span>
+                  <span className="              reserve-guests-hint">6+? Call us</span>
+                </div>
+              </div>
+
+              <div className="reserve-field">
+                <span className="reserve-field-label">
+                  Occasion <small style={{ opacity: 0.7 }}>(optional)</small>
+                </span>
+                <div className="reserve-guests" role="group" aria-label="Occasion">
+                  {OCCASIONS.map((o) => (
+                    <button
+                      type="button"
+                      key={o}
+                      className={`reserve-guest reserve-guest-text ${form.occasion === o ? 'is-active' : ''}`}
+                      onClick={() => setForm({ ...form, occasion: form.occasion === o ? '' : o })}
+                      aria-pressed={form.occasion === o}
+                    >
+                      <span>{o}</span>
+                    </button>
+                  ))}
                 </div>
               </div>
 
@@ -466,12 +544,18 @@ export default function Reservation() {
                 className="btn btn-primary reserve-btn"
                 disabled={state === 'loading'}
               >
-                {state === 'loading' ? 'Booking…' : 'Confirm Reservation'}
+                {state === 'loading'
+                  ? 'Booking…'
+                  : customer
+                    ? 'Confirm Reservation'
+                    : 'Login to Reserve'}
               </button>
               <p className="reserve-note">
                 {state === 'loading'
                   ? 'Confirming your table…'
-                  : blockedReason || 'No advance needed — we hold the table for 15 minutes.'}
+                  : !customer
+                    ? 'Login to confirm your booking.'
+                    : blockedReason || 'No advance needed — we hold the table for 15 minutes.'}
               </p>
             </form>
           )}

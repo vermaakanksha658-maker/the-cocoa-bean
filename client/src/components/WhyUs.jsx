@@ -5,51 +5,59 @@ import useInView from '../hooks/useInView.js';
 const features = [
   {
     num: '01',
-    title: 'Roasted In-House',
-    desc: 'Small-batch single-origin beans, roasted fresh every week so every cup keeps its aroma.',
-    more: 'Each batch is cupped and logged before it ever reaches the grinder.',
-    badges: ['Single origin', 'Roasted weekly', 'Cup-tested'],
+    title: 'Delicious Food',
+    desc: 'Freshly cooked, generously served — every plate made to please.',
+    more: 'From quick bites to full meals, the kitchen cooks to order.',
+    badges: ['Cooked fresh', 'Generous portions', 'Made to share'],
     icon: (
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M30 6c6 4 7 10 4 15l-8 13H22l-8-13c-3-5-2-11 4-15l2 4c6-1 8 1 10-4z" />
-        <path d="M16 34c-3 2-6 6-6 10 6-1 10-3 12-7M32 34c3 2 6 6 6 10-6-1-10-3-12-7" />
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M8 26a16 16 0 0 1 32 0z" />
+        <path d="M6 26h36" />
+        <circle cx="24" cy="15" r="2" fill="currentColor" stroke="none" />
+        <path d="M14 26v8M34 26v8M24 26v10" />
+        <ellipse cx="24" cy="41" rx="14" ry="3" />
       </svg>
     ),
   },
   {
     num: '02',
-    title: 'Barista Craft',
-    desc: 'Latte art, precise temperatures — every shot considered.',
-    more: 'Dialled in each morning: dose, yield and temperature checked twice.',
+    title: 'Café Special',
+    desc: 'Handcrafted drinks and café favourites, poured with care.',
+    more: 'Cold coffee, mocktails, chai and more — your café corner.',
     icon: (
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M12 22h22v10a11 11 0 01-22 0z" />
-        <path d="M34 26h4a5 5 0 010 10h-4M18 18c0-4-3-5-2-9M27 18c1-4-2-5-1-9" />
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M10 20h24v10a12 12 0 0 1-24 0z" />
+        <path d="M34 23h4a5 5 0 0 1 0 10h-4" />
+        <path d="M17 15c0-4-3-5-2-9M26 15c1-4-2-5-1-9" />
       </svg>
     ),
   },
   {
     num: '03',
-    title: 'Cozy Corners',
-    desc: 'Warm lights, soft seats and your own quiet nook.',
-    more: 'Corner seats, warm lamps and power points that actually work.',
+    title: 'Family Friendly',
+    desc: 'A warm room where every generation feels at home.',
+    more: 'Space for family dinners, get-togethers and big celebrations.',
+    badges: ['Family dinners', 'Room for groups', 'All generations'],
     icon: (
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M10 40l6-14h16l6 14H10z" />
-        <path d="M16 26l8-16 8 16M24 10V6M14 14h4M30 14h4" />
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="17" cy="15" r="5" />
+        <circle cx="32" cy="18" r="4" />
+        <path d="M8 38c0-6 4-10 9-10s9 4 9 10" />
+        <path d="M27 38c0-5 3-8 7-8 4 0 7 3 7 8" />
       </svg>
     ),
   },
   {
     num: '04',
-    title: 'Quick & Warm Service',
-    desc: 'Smiles first, coffee second — served in minutes, never rushed.',
-    more: 'Order at the counter or your table, we will bring it over.',
+    title: 'Cosy Ambience',
+    desc: 'Soft lights, comfy seating and a mood made for lingering.',
+    more: 'Warm interiors that make every meal feel a little special.',
     wide: true,
     icon: (
-      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2">
-        <circle cx="24" cy="24" r="17" />
-        <path d="M14 30c3 4 6 6 10 6s7-2 10-6M18 20h.01M30 20h.01" strokeLinecap="round" />
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 40l3-14h18l3 14H12z" />
+        <path d="M17 26l7-14 7 14" />
+        <path d="M24 12V7M14 16h4M30 16h4" />
       </svg>
     ),
   },
@@ -111,8 +119,8 @@ export default function WhyUs() {
 
       <div className="container">
         <div className="section-head">
-          <span className="kicker">why cocoa bean</span>
-          <h2 className="section-title why-title">Brewed to Be Memorable</h2>
+          <span className="kicker">why grand</span>
+          <h2 className="section-title why-title">Made to Be Memorable</h2>
           <div className="divider"></div>
         </div>
 

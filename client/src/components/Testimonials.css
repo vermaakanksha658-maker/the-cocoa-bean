@@ -398,6 +398,7 @@
   align-items: center;
   justify-content: center;
   gap: 14px;
+  position: relative;
 }
 
 .testi-card figcaption {
@@ -408,6 +409,7 @@
   position: relative;
   width: 52px;
   height: 52px;
+  flex: 0 0 52px;
   border-radius: 50%;
   background: var(--coffee);
   color: var(--cream);
@@ -420,8 +422,6 @@
   flex-shrink: 0;
   border: 2px solid var(--gold);
   box-shadow: 0 4px 14px rgba(43, 26, 18, 0.16);
-  transform: translateZ(26px);
-  transform-style: preserve-3d;
 }
 
 .testi-avatar-ring {
@@ -458,10 +458,21 @@
 .testi-avatar-initials {
   font-size: 0.92rem;
   letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  line-height: 1;
 }
 
 .testi-person {
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 0 1 auto;
+  min-width: 0;
 }
 
 .testi-card strong {

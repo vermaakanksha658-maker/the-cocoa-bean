@@ -8,20 +8,22 @@ const hours = [
   { days: [0], open: 9, close: 22, label: 'Sunday' },
 ];
 
-const ADDRESS = 'The Cocoa Bean, 24 Mocha Lane, Brewery District, City Center — 400001';
-const MAPS_URL = 'https://maps.google.com/maps?q=Brewery+District+City+Center';
+const ADDRESS =
+  'Grand Restaurant & Cafe, Top Floor, Aliganj Plaza, B-42, Sector J, Opp. Danbro, Aliganj, Lucknow, UP 226024';
+const MAPS_URL = 'https://maps.app.goo.gl/SttwDLxifUXjGwUZ9';
+const MAPS_QUERY = 'Aliganj Grand Restaurant & Cafe, Aliganj Plaza, Sector J, Lucknow';
 
 const shots = [
   {
-    src: 'https://images.unsplash.com/photo-1777451441095-c7ef2f875929?fm=jpg&q=80&w=400&auto=format&fit=crop',
+    src: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?fm=jpg&q=80&w=400&auto=format&fit=crop',
     caption: 'Plant-filled corners',
   },
   {
-    src: 'https://images.unsplash.com/photo-1752757257738-9a4f136b3f87?fm=jpg&q=80&w=400&auto=format&fit=crop',
+    src: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?fm=jpg&q=80&w=400&auto=format&fit=crop',
     caption: 'Wooden warmth',
   },
   {
-    src: 'https://images.unsplash.com/photo-1757010055832-de355d2f8f06?fm=jpg&q=80&w=400&auto=format&fit=crop',
+    src: 'https://images.unsplash.com/photo-1544148103-0773bf10d330?fm=jpg&q=80&w=400&auto=format&fit=crop',
     caption: 'Warm afternoon light',
   },
 ];
@@ -90,7 +92,7 @@ const contacts = [
   },
   {
     label: 'Email',
-    href: 'mailto:hello@thecocoabean.com',
+    href: 'mailto:hello@example.com',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <rect x="3" y="5.2" width="18" height="13.6" rx="2.6" />
@@ -268,8 +270,8 @@ export default function VisitUs() {
         <div className={`visit-col reveal reveal-left ${leftIn ? 'in-view' : ''}`} ref={leftRef}>
           <div className="visit-map">
             <iframe
-              title="The Cocoa Bean location"
-              src="https://maps.google.com/maps?q=Brewery%20District%20City%20Center&t=&z=14&ie=UTF8&iwloc=B&output=embed"
+              title="Grand Restaurant & Cafe location"
+              src={`https://maps.google.com/maps?q=${encodeURIComponent(MAPS_QUERY)}&t=&z=15&ie=UTF8&iwloc=B&output=embed`}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
@@ -280,8 +282,8 @@ export default function VisitUs() {
             </span>
 
             <div className="visit-map-card">
-              <strong>The Cocoa Bean</strong>
-              <span>24 Mocha Lane, Brewery District</span>
+              <strong>Grand Restaurant &amp; Cafe</strong>
+              <span>Top Floor, Aliganj Plaza, Sector J — Opp. Danbro</span>
               <a href={MAPS_URL} target="_blank" rel="noreferrer" className="visit-map-link">
                 Open in Maps
                 <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -308,7 +310,7 @@ export default function VisitUs() {
 
         <div className={`visit-info reveal reveal-right ${rightIn ? 'in-view' : ''}`} ref={rightRef}>
           <span className="kicker">find us</span>
-          <h2 className="section-title">Visit The Cocoa Bean</h2>
+          <h2 className="section-title">Visit Grand Restaurant &amp; Cafe</h2>
 
           <div className={`visit-status ${status.open ? 'visit-open' : 'visit-closed'}`} role="status">
             <span className="visit-status-dot" aria-hidden="true"></span>
@@ -337,9 +339,9 @@ export default function VisitUs() {
           <div className="visit-block address-block">
             <h3>Find Us</h3>
             <p>
-              24 Mocha Lane, Brewery District,
+              Top Floor, Aliganj Plaza, B-42, Sector J,
               <br />
-              City Center — 400001
+              Opp. Danbro, Aliganj, Lucknow — 226024
             </p>
             <p className="visit-note">
               <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

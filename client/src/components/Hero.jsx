@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import './Hero.css';
 
 const BG_IMAGES = [
-  'https://images.unsplash.com/photo-1670523685691-c1f01daa090b?fm=jpg&q=80&w=1920&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?fm=jpg&q=80&w=1920&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1509042239860-f550ce710b93?fm=jpg&q=80&w=1920&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?fm=jpg&q=80&w=1920&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1552566626-52f8b828add9?fm=jpg&q=80&w=1920&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?fm=jpg&q=80&w=1920&auto=format&fit=crop',
 ];
 
 const ROTATE_WORDS = ['Warm', 'Cozy', 'Sweet', 'Golden', 'Velvet'];
@@ -182,7 +182,7 @@ export default function Hero() {
 
       <div className="hero-content container">
         <span className="hero-script hero-anim-1">
-          {getGreeting()} &middot; freshly brewed, with love
+          {getGreeting()} &middot; good food, good mood
         </span>
         <h1 className="hero-title">
           <span className="hero-line hero-anim-2">
@@ -190,7 +190,7 @@ export default function Hero() {
               Rich
             </span>{' '}
             <span className="hero-word" style={{ '--w': 1 }}>
-              Coffee,
+              Flavours,
             </span>
           </span>
           <span className="hero-line hero-anim-3">
@@ -204,8 +204,8 @@ export default function Hero() {
           </span>
         </h1>
         <p className="hero-sub hero-anim-4">
-          Slow-roasted single-origin beans, handcrafted drinks and cozy corners — brewed daily at{' '}
-          <strong>The Cocoa Bean</strong>.
+          Good Food. Good Mood. Great Memories. — a perfect blend of taste &amp; ambience at{' '}
+          <strong>Grand Restaurant &amp; Cafe</strong>.
         </p>
         <div className="hero-cta hero-anim-5">
           <a href="#menu" className="btn btn-primary">
@@ -224,9 +224,9 @@ export default function Hero() {
         </div>
         <div className="hero-trust hero-anim-6">
           <span className="hero-stars" aria-hidden="true">★★★★★</span>
-          <span>4.9 &middot; 200+ Google Reviews</span>
+          <span>4.9 &middot; 15 Google Reviews</span>
           <span className="hero-trust-dot">&middot;</span>
-          <span>Fresh Daily</span>
+          <span>Dine-in &amp; Delivery</span>
         </div>
       </div>
 

@@ -20,6 +20,7 @@ const orderSchema = new mongoose.Schema(
       validate: [(v) => Array.isArray(v) && v.length > 0, 'Order must contain at least one item'],
     },
     total: { type: Number, required: true, min: 0 },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
     status: { type: String, default: 'placed', enum: ['placed', 'confirmed', 'completed', 'cancelled'] },
   },
   { timestamps: true }

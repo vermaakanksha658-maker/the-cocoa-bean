@@ -2,12 +2,13 @@ import express from 'express';
 import Order from '../models/Order.js';
 import MenuItem from '../models/MenuItem.js';
 import { requireAdmin } from '../middleware/auth.js';
+import { requireCustomer } from '../middleware/customerAuth.js';
 
 const router = express.Router();
 
 const ORDER_STATUSES = ['placed', 'confirmed', 'completed', 'cancelled'];
 
-router.post('/', async (req, res) => {
+router.post('/', requireCustomer, async (req, res) => {
   try {
     const { name, phone, items } = req.body || {};
     if (!name || !String(name).trim() || !phone || !String(phone).trim()) {
@@ -26,7 +27,13 @@ router.post('/', async (req, res) => {
     }
 
     const total = clean.reduce((sum, line) => sum + line.price * line.qty, 0);
-    const order = await Order.create({ name: String(name).trim(), phone: String(phone).trim(), items: clean, total });
+    const order = await Order.create({
+      name: String(name).trim(),
+      phone: String(phone).trim(),
+      items: clean,
+      total,
+      user: req.customer.id,
+    });
     res.status(201).json(order);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -38,6 +45,15 @@ router.get('/', requireAdmin, async (req, res) => {
     const filter = {};
     if (req.query.status && ORDER_STATUSES.includes(req.query.status)) filter.status = req.query.status;
     const orders = await Order.find(filter).sort({ createdAt: -1 });
+    res.json(orders);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.get('/mine', requireCustomer, async (req, res) => {
+  try {
+    const orders = await Order.find({ user: req.customer.id }).sort({ createdAt: -1 });
     res.json(orders);
   } catch (error) {
     res.status(500).json({ message: error.message });

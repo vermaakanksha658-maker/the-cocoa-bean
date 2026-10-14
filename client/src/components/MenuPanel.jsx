@@ -581,7 +581,7 @@ export default function MenuPanel({ variant = 'full', limit = 6 }) {
             </div>
             <div className="spot-body" key={pick._id}>
               <span className="spot-kicker">
-                Barista&apos;s Pick
+                Chef&apos;s Pick
                 {picks.length > 1 && <em className="spot-index">0{pickIdx + 1} / 0{picks.length}</em>}
               </span>
               <h3>{pick.name}</h3>
@@ -823,7 +823,7 @@ export default function MenuPanel({ variant = 'full', limit = 6 }) {
                 <p>
                   {hasSearch
                     ? 'Try a shorter word, or jump straight to one of these:'
-                    : 'Try another category — something is always brewing.'}
+                    : 'Try another category — something delicious is always cooking.'}
                 </p>
                 {hasSearch && suggestions.length > 0 && (
                   <div className="menu-empty-chips">

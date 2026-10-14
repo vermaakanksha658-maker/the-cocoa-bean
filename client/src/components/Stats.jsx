@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import './Stats.css';
 
 const stats = [
-  { value: 12, suffix: '+', label: 'Years of Brewing', icon: 'cup', dots: 12 },
-  { value: 40, suffix: '+', label: 'Drinks on Menu', icon: 'menu', dots: 8 },
-  { value: 25, suffix: 'K+', label: 'Happy Sips Served', icon: 'smile', dots: 8 },
-  { value: 4.9, suffix: '', label: 'Average Rating', icon: 'star', decimals: 1, dots: 5 },
+  { value: 4.9, suffix: '', label: 'Google Rating', icon: 'star', decimals: 1, dots: 5 },
+  { value: 15, suffix: '', label: 'Google Reviews', icon: 'smile', dots: 8 },
+  { value: 4, suffix: '', label: 'Ways to Enjoy Us', icon: 'menu', dots: 8 },
+  { value: 5, suffix: '+', label: 'Occasions to Celebrate', icon: 'star', dots: 5 },
 ];
 
 const ICONS = {
@@ -173,7 +173,7 @@ export default function Stats() {
   }, [visible]);
 
   return (
-    <section className="stats" aria-label="The Cocoa Bean in numbers">
+    <section className="stats" aria-label="Grand Restaurant & Cafe in numbers">
       <div className="stats-fx" aria-hidden="true">
         <span className="stats-ripple"></span>
         <span className="stats-ripple"></span>

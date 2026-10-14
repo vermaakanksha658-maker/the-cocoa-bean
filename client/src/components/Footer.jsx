@@ -22,7 +22,7 @@ const categories = [
 const socials = [
   {
     label: 'Instagram',
-    href: 'https://www.instagram.com/',
+    href: 'https://www.instagram.com/aliganjcafe/',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
         <rect x="3" y="3" width="18" height="18" rx="5" />
@@ -32,20 +32,22 @@ const socials = [
     ),
   },
   {
-    label: 'Facebook',
-    href: 'https://www.facebook.com/',
+    label: 'YouTube',
+    href: 'https://www.youtube.com/@Aliganjgrandcafe',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <path d="M14 8h3V5h-3a4 4 0 00-4 4v2H7v3h3v7h3v-7h3l1-3h-4V9a1 1 0 011-1z" />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round">
+        <path d="M22.5 8.4a3 3 0 0 0-2.1-2.1C18.7 5.8 12 5.8 12 5.8s-6.7 0-8.4.5A3 3 0 0 0 1.5 8.4C1 10.2 1 12 1 12s0 1.8.5 3.6a3 3 0 0 0 2.1 2.1c1.7.5 8.4.5 8.4.5s6.7 0 8.4-.5a3 3 0 0 0 2.1-2.1c.5-1.8.5-3.6.5-3.6s0-1.8-.5-3.6z" />
+        <path d="M10 8.8l6 3.2-6 3.2z" fill="currentColor" stroke="none" />
       </svg>
     ),
   },
   {
-    label: 'X',
-    href: 'https://x.com/',
+    label: 'Google Maps',
+    href: 'https://maps.app.goo.gl/SttwDLxifUXjGwUZ9',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-        <path d="M4 4l16 16M20 4L4 20" strokeLinecap="round" />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 21.2s7-6.4 7-11.2a7 7 0 1 0-14 0c0 4.8 7 11.2 7 11.2z" />
+        <circle cx="12" cy="10" r="2.6" />
       </svg>
     ),
   },
@@ -53,9 +55,9 @@ const socials = [
 
 const contacts = [
   {
-    label: '24 Mocha Lane, Brewery District',
-    sub: 'City Center — 400001',
-    href: 'https://maps.google.com/maps?q=Brewery+District+City+Center',
+    label: 'Top Floor, Aliganj Plaza, Sector J',
+    sub: 'Opp. Danbro, Aliganj, Lucknow — 226024',
+    href: 'https://maps.app.goo.gl/SttwDLxifUXjGwUZ9',
     external: true,
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
@@ -75,9 +77,9 @@ const contacts = [
     ),
   },
   {
-    label: 'hello@cocoabean.cafe',
-    sub: 'We reply within a day',
-    href: 'mailto:hello@cocoabean.cafe',
+    label: 'hello@example.com',
+    sub: 'Official email coming soon',
+    href: 'mailto:hello@example.com',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
         <rect x="3" y="5.2" width="18" height="13.6" rx="2.6" />
@@ -108,8 +110,8 @@ export default function Footer() {
         <div className="container">
           <div className="footer-cta">
             <div className="footer-cta-copy">
-              <h3>Reserve your corner</h3>
-              <p>Best seat by the window, kettle warm — table held for 15 minutes.</p>
+              <h3>Reserve your table</h3>
+              <p>A warm welcome and your favourite seat — held for 15 minutes.</p>
             </div>
             <div className="footer-cta-actions">
               <Link to={{ pathname: '/', hash: '#reserve' }} className="btn btn-primary footer-cta-btn">
@@ -127,15 +129,15 @@ export default function Footer() {
           <div className="footer-grid">
             <div className="footer-brand">
               <Link to="/" className="logo footer-logo">
-                <span className="logo-script">the</span> Cocoa Bean
+                <span className="logo-script">Grand</span> Restaurant &amp; Cafe
               </Link>
               <p className="footer-tag">
                 <span className="footer-tag-full">
-                  Elegant coffee, crafted moments. Brewed with love since 2012 — slow-roasted,
-                  hand-poured, always shared.
+                  Great food, handcrafted drinks and warm moments — a restaurant &amp; cafe in the
+                  heart of Lucknow.
                 </span>
                 <span className="footer-tag-short">
-                  Elegant coffee, crafted moments. Brewed with love since 2012.
+                  Great food, handcrafted drinks and warm moments in Lucknow.
                 </span>
               </p>
               <div className="footer-cats">
@@ -203,7 +205,7 @@ export default function Footer() {
 
         <div className="footer-bottom">
           <div className="container footer-bottom-inner">
-            <p>&copy; {new Date().getFullYear()} The Cocoa Bean. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} Grand Restaurant &amp; Cafe. All rights reserved.</p>
             <span className="footer-legal">Privacy · Terms · Cookies</span>
           </div>
         </div>
