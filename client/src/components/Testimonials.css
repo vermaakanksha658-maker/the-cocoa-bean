@@ -402,7 +402,7 @@
 }
 
 .testi-card figcaption {
-  transform-style: preserve-3d;
+  transform-style: flat;
 }
 
 .testi-avatar {

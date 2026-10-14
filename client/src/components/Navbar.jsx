@@ -285,15 +285,6 @@ export default function Navbar() {
                     <div className="cust-menu-head">
                       <span className="cust-menu-name">{customer.name}</span>
                       <span className="cust-menu-mail">{customer.email}</span>
-                      {!customer.emailVerified && (
-                        <span className="cust-verify-note">
-                          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-                            <circle cx="12" cy="12" r="10" />
-                            <path d="M12 16v-4M12 8h.01" />
-                          </svg>
-                          Email not verified
-                        </span>
-                      )}
                     </div>
                     <Link to="/my-orders" className="cust-menu-item" onClick={() => setCustMenuOpen(false)} role="menuitem">
                       <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
