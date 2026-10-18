@@ -52,10 +52,14 @@ export const register = async (req, res) => {
     await user.save();
     const mail = await issueVerification(user);
 
-    setCustomerCookie(res, user);
     return res.status(201).json({
-      user: user.publicProfile(),
-      ...(mail.dev && process.env.NODE_ENV !== 'production' ? { devVerifyLink: mail.link } : {}),
+      message: 'Verification email sent — please check your inbox and click the link to activate your account.',
+      ...(process.env.NODE_ENV !== 'production'
+        ? {
+            ...(mail.preview ? { devPreviewUrl: mail.preview } : {}),
+            ...(mail.link ? { devVerifyLink: mail.link } : {}),
+          }
+        : {}),
     });
   } catch (error) {
     return res.status(400).json({ message: error.message });
@@ -75,6 +79,14 @@ export const login = async (req, res) => {
     const ok = user && (await user.comparePassword(password));
     if (!ok) {
       return res.status(401).json({ message: 'Incorrect email or password.' });
+    }
+
+    if (!user.emailVerified) {
+      return res.status(403).json({
+        code: 'EMAIL_NOT_VERIFIED',
+        message: 'Please verify your email first. Check your inbox for the verification link.',
+        email: user.email,
+      });
     }
 
     setCustomerCookie(res, user);
@@ -115,6 +127,7 @@ export const verifyEmail = async (req, res) => {
     user.verifyTokenExpires = null;
     await user.save();
 
+    setCustomerCookie(res, user);
     return res.json({ user: user.publicProfile(), message: 'Email verified — thank you!' });
   } catch (error) {
     return res.status(400).json({ message: error.message });
@@ -123,11 +136,29 @@ export const verifyEmail = async (req, res) => {
 
 export const resendVerification = async (req, res) => {
   try {
-    const user = await User.findById(req.customer.id);
-    if (!user) return res.status(404).json({ message: 'Account not found.' });
+    let user = null;
+    if (req.customer?.id) {
+      user = await User.findById(req.customer.id);
+    } else {
+      const email = String(req.body?.email || '').trim().toLowerCase();
+      if (EMAIL_RE.test(email)) {
+        user = await User.findOne({ email });
+      }
+    }
+    if (!user) {
+      return res.json({ message: 'If an account exists for that email, a verification email is on its way.' });
+    }
     if (user.emailVerified) return res.json({ message: 'Your email is already verified.' });
-    await issueVerification(user);
-    res.json({ message: 'Verification email sent — please check your inbox.' });
+    const mail = await issueVerification(user);
+    return res.json({
+      message: 'Verification email sent — please check your inbox.',
+      ...(process.env.NODE_ENV !== 'production'
+        ? {
+            ...(mail.preview ? { devPreviewUrl: mail.preview } : {}),
+            ...(mail.link ? { devVerifyLink: mail.link } : {}),
+          }
+        : {}),
+    });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

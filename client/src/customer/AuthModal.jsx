@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useCustomer } from './useCustomer.jsx';
-import { forgotPassword } from './api.js';
+import { forgotPassword, resendVerification } from './api.js';
 import { useToast } from '../context/ToastContext.jsx';
 
 function GoogleIcon() {
@@ -21,12 +21,15 @@ export default function AuthModal() {
   const toast = useToast();
   const cardRef = useRef(null);
 
-  const [view, setView] = useState('login'); // login | register | forgot
+  const [view, setView] = useState('login'); // login | register | forgot | sent
   const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
   const [busy, setBusy] = useState(false);
   const [devLink, setDevLink] = useState('');
+  const [devPreview, setDevPreview] = useState('');
+  const [needsVerify, setNeedsVerify] = useState(false);
+  const [resending, setResending] = useState(false);
 
   useEffect(() => {
     if (authOpen) {
@@ -34,6 +37,8 @@ export default function AuthModal() {
       setError('');
       setNotice('');
       setDevLink('');
+      setDevPreview('');
+      setNeedsVerify(false);
       setTimeout(() => cardRef.current?.focus(), 30);
     }
   }, [authOpen, authTab]);
@@ -64,20 +69,43 @@ export default function AuthModal() {
     setError('');
     setNotice('');
     setDevLink('');
+    setDevPreview('');
+    setNeedsVerify(false);
   };
 
   const submitLogin = async (e) => {
     e.preventDefault();
     setBusy(true);
     setError('');
+    setNeedsVerify(false);
     try {
       const user = await login(form.email.trim(), form.password);
       toast.push(`Welcome back, ${user.name.split(' ')[0]}!`, 'success');
       closeAuth();
     } catch (err) {
-      setError(err.message);
+      if (err.status === 403) {
+        setNeedsVerify(true);
+        setError(err.message);
+      } else {
+        setError(err.message);
+      }
     } finally {
       setBusy(false);
+    }
+  };
+
+  const submitResend = async () => {
+    setResending(true);
+    setError('');
+    try {
+      const res = await resendVerification(form.email.trim());
+      setNotice(res.message || 'Verification email sent — please check your inbox.');
+      if (res.devVerifyLink) setDevLink(res.devVerifyLink);
+      if (res.devPreviewUrl) setDevPreview(res.devPreviewUrl);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setResending(false);
     }
   };
 
@@ -90,10 +118,12 @@ export default function AuthModal() {
     setBusy(true);
     setError('');
     try {
-      const { user, devVerifyLink } = await register(form.name.trim(), form.email.trim(), form.password);
-      toast.push(`Account created — welcome, ${user.name.split(' ')[0]}!`, 'success');
-      if (devVerifyLink) setDevLink(devVerifyLink);
-      closeAuth();
+      const res = await register(form.name.trim(), form.email.trim(), form.password);
+      setNotice(res.message || 'Verification email sent — please check your inbox.');
+      if (res.devVerifyLink) setDevLink(res.devVerifyLink);
+      if (res.devPreviewUrl) setDevPreview(res.devPreviewUrl);
+      setView('sent');
+      toast.push('Verification email sent — check your inbox!', 'success');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -137,7 +167,38 @@ export default function AuthModal() {
 
         {authReason && <p className="cust-auth-reason">{authReason}</p>}
 
-        {view === 'forgot' ? (
+        {view === 'sent' ? (
+          <div className="cust-auth-form">
+            <h3 className="cust-auth-title">Check your email</h3>
+            <p className="cust-auth-sub">
+              We sent a verification link to <strong>{form.email}</strong>. Click the link in that
+              email to activate your account, then log in.
+            </p>
+            {notice && <p className="cust-auth-notice">{notice}</p>}
+            {(devLink || devPreview) && (
+              <p className="cust-auth-notice" style={{ fontSize: '0.8rem', wordBreak: 'break-all' }}>
+                (Dev mode — email preview:{' '}
+                {devPreview && <a href={devPreview} target="_blank" rel="noreferrer">open sent email</a>}
+                {devPreview && devLink && ' · '}
+                {devLink && <a href={devLink}>click here to verify directly</a>})
+              </p>
+            )}
+            <button
+              className="btn btn-primary cust-auth-submit"
+              onClick={() => switchView('login')}
+            >
+              Back to login
+            </button>
+            <button
+              type="button"
+              className="cust-auth-switch"
+              onClick={submitResend}
+              disabled={resending}
+            >
+              {resending ? 'Resending…' : 'Resend verification email'}
+            </button>
+          </div>
+        ) : view === 'forgot' ? (
           <form className="cust-auth-form" onSubmit={submitForgot}>
             <h3 className="cust-auth-title">Reset your password</h3>
             <p className="cust-auth-sub">We&rsquo;ll email you a link to set a new password.</p>
@@ -226,6 +287,28 @@ export default function AuthModal() {
                   />
                 </label>
                 {error && <p className="cust-auth-error">{error}</p>}
+                {needsVerify && (
+                  <div className="cust-auth-notice">
+                    <button
+                      type="button"
+                      className="cust-auth-switch"
+                      onClick={submitResend}
+                      disabled={resending}
+                      style={{ padding: 0, marginBottom: 8 }}
+                    >
+                      {resending ? 'Resending…' : 'Resend verification email'}
+                    </button>
+                    {notice && <p style={{ marginTop: 6 }}>{notice}</p>}
+                    {(devLink || devPreview) && (
+                      <p style={{ fontSize: '0.8rem', wordBreak: 'break-all', marginTop: 6 }}>
+                        (Dev mode:{' '}
+                        {devPreview && <a href={devPreview} target="_blank" rel="noreferrer">open sent email</a>}
+                        {devPreview && devLink && ' · '}
+                        {devLink && <a href={devLink}>verify directly</a>})
+                      </p>
+                    )}
+                  </div>
+                )}
                 <button className="btn btn-primary cust-auth-submit" disabled={busy}>
                   {busy ? 'Signing in…' : 'Login'}
                 </button>
@@ -273,7 +356,7 @@ export default function AuthModal() {
                 <button className="btn btn-primary cust-auth-submit" disabled={busy}>
                   {busy ? 'Creating account…' : 'Create account'}
                 </button>
-                <p className="cust-auth-fine">We&rsquo;ll send a verification email — you can order right away.</p>
+                <p className="cust-auth-fine">We&rsquo;ll email you a verification link — click it to activate your account.</p>
               </form>
             )}
           </>

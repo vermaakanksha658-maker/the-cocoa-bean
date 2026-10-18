@@ -55,6 +55,8 @@ const start = async () => {
   const admin = await ensureAdmin();
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
+    const smtpOk = process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS;
+    console.log(smtpOk ? `[mailer] SMTP configured — ${process.env.SMTP_USER}` : '[mailer] SMTP NOT configured — emails will log to console only');
     if (!admin) console.warn('[admin] No admin account present yet - see ensureAdmin() message above.');
   });
 };

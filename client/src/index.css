@@ -265,6 +265,88 @@ input:focus-visible {
   .section-pad {
     padding: 48px 0;
   }
+
+  /* ===== MOBILE PERFORMANCE ===== */
+
+  /* Level 1: backdrop-filter OFF (sabse heavy effect mobile GPU ke liye).
+     Jahan blur tha wahan background thoda opaque kar diya taaki design same lage. */
+  .navbar-solid {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: rgba(74, 44, 29, 0.96) !important;
+  }
+  .nav-backdrop {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: rgba(18, 11, 7, 0.8) !important;
+  }
+  .cust-auth-overlay {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: rgba(43, 26, 18, 0.88) !important;
+  }
+  .cart-overlay {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: rgba(23, 16, 11, 0.82) !important;
+  }
+  .lb-overlay {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  .hero-stamp {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: rgba(43, 26, 18, 0.9) !important;
+  }
+  .hero-chip {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: rgba(43, 26, 18, 0.92) !important;
+  }
+  .menu-toolbar {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: var(--pg-bg) !important;
+  }
+  .qv-overlay {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: rgba(23, 16, 11, 0.85) !important;
+  }
+  .stat {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: rgba(255, 253, 250, 0.1) !important;
+  }
+  .visit-map-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: rgba(23, 16, 11, 0.92) !important;
+  }
+
+  /* Level 2 (soft): har animation sirf EK baar chale (infinite wali ek chakkar
+     chalke band, entry wali pehle jaisi hi). */
+  *,
+  *::before,
+  *::after {
+    animation-iteration-count: 1 !important;
+    animation-duration: 0.7s !important;
+  }
+
+  /* Level 3: bade blur wale decorative graphics mobile pe chhupao
+     (ye sirf glow/wisp hain — content pe koi asar nahi). */
+  .hero-steam,
+  .menu-wisp,
+  .stats-steam,
+  .visit-wisp,
+  .about-wisp,
+  .testi-wisp,
+  .why-amb-wisp,
+  .gallery-beam,
+  .gallery-wisp {
+    display: none !important;
+  }
 }
 
 html.nav-hidden .menu-toolbar {

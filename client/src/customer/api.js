@@ -28,7 +28,11 @@ export const register = (name, email, password) =>
   request('/api/auth/register', { method: 'POST', body: JSON.stringify({ name, email, password }) });
 export const logout = () => request('/api/auth/logout', { method: 'POST' });
 export const verifyEmail = (token) => request(`/api/auth/verify-email?token=${encodeURIComponent(token)}`);
-export const resendVerification = () => request('/api/auth/resend-verification', { method: 'POST' });
+export const resendVerification = (email) =>
+  request('/api/auth/resend-verification', {
+    method: 'POST',
+    body: JSON.stringify(email ? { email } : {}),
+  });
 export const forgotPassword = (email) =>
   request('/api/auth/forgot-password', { method: 'POST', body: JSON.stringify({ email }) });
 export const resetPassword = (token, password) =>

@@ -8,6 +8,7 @@ export default function VerifyEmail() {
   const token = params.get('token') || '';
   const [state, setState] = useState('loading'); // loading | ok | error
   const [message, setMessage] = useState('');
+  const [verifiedUser, setVerifiedUser] = useState(null);
   const { setCustomerFromVerify } = useCustomer();
   const ran = useRef(false);
 
@@ -23,6 +24,7 @@ export default function VerifyEmail() {
       .then((res) => {
         setState('ok');
         setMessage(res.message || 'Email verified — thank you!');
+        setVerifiedUser(res.user || null);
         if (res.user && setCustomerFromVerify) setCustomerFromVerify(res.user);
       })
       .catch((err) => {
@@ -38,7 +40,14 @@ export default function VerifyEmail() {
       {state === 'ok' && (
         <>
           <p className="myorders-sub" style={{ color: '#2f6b46' }}>{message}</p>
-          <Link to="/" className="btn btn-primary">Back to the cafe</Link>
+          {verifiedUser && (
+            <p className="myorders-sub">
+              Signed in as <strong>{verifiedUser.name}</strong> ({verifiedUser.email})
+            </p>
+          )}
+          <button type="button" className="btn btn-primary" onClick={() => { window.location.href = '/'; }}>
+            Continue to site
+          </button>
         </>
       )}
       {state === 'error' && (

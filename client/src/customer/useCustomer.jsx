@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import * as api from './api.js';
 import AuthModal from './AuthModal.jsx';
 import { useToast } from '../context/ToastContext.jsx';
@@ -34,6 +34,9 @@ export function CustomerProvider({ children }) {
   const [authTab, setAuthTab] = useState('login');
   const [authReason, setAuthReason] = useState('');
   const [pending, setPending] = useState(readPending);
+  // Bumped whenever the session changes (login/logout/verify) so in-flight
+  // /me responses from the OLD session can't overwrite the new one.
+  const sessionGen = useRef(0);
 
   // Google OAuth returns here with ?auth=... — show feedback and clean the URL.
   useEffect(() => {
@@ -46,23 +49,42 @@ export function CustomerProvider({ children }) {
     window.history.replaceState({}, '', window.location.pathname);
   }, [toast]);
 
-  useEffect(() => {
-    let cancelled = false;
-    api
+  const fetchMe = useCallback(() => {
+    const gen = sessionGen.current;
+    return api
       .getMe()
       .then(({ user }) => {
-        if (!cancelled) setCustomer(user);
+        // Ignore if session changed (login/logout/verify) while this was in flight.
+        if (gen === sessionGen.current) setCustomer(user);
       })
       .catch(() => {
-        if (!cancelled) setCustomer(null);
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
+        if (gen === sessionGen.current) setCustomer(null);
       });
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchMe().finally(() => {
+      if (!cancelled) setLoading(false);
+    });
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [fetchMe]);
+
+  // Another tab may have logged in/out or verified — re-sync when this tab
+  // becomes visible again so the navbar never shows a stale name.
+  useEffect(() => {
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') fetchMe();
+    };
+    document.addEventListener('visibilitychange', onVisible);
+    window.addEventListener('focus', onVisible);
+    return () => {
+      document.removeEventListener('visibilitychange', onVisible);
+      window.removeEventListener('focus', onVisible);
+    };
+  }, [fetchMe]);
 
   // When the customer becomes available, continue any pending action.
   useEffect(() => {
@@ -94,14 +116,13 @@ export function CustomerProvider({ children }) {
 
   const login = useCallback(async (email, password) => {
     const { user } = await api.login(email, password);
+    sessionGen.current += 1;
     setCustomer(user);
     return user;
   }, []);
 
   const register = useCallback(async (name, email, password) => {
-    const { user, devVerifyLink } = await api.register(name, email, password);
-    setCustomer(user);
-    return { user, devVerifyLink };
+    return api.register(name, email, password);
   }, []);
 
   const loginWithGoogle = useCallback(
@@ -118,10 +139,14 @@ export function CustomerProvider({ children }) {
     } catch {
       /* ignore */
     }
+    sessionGen.current += 1;
     setCustomer(null);
   }, []);
 
-  const setCustomerFromVerify = useCallback((user) => setCustomer(user), []);
+  const setCustomerFromVerify = useCallback((user) => {
+    sessionGen.current += 1;
+    setCustomer(user);
+  }, []);
 
   const value = {
     customer,

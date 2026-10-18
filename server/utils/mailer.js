@@ -1,11 +1,10 @@
 import nodemailer from 'nodemailer';
 
-const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM, APP_URL } = process.env;
-
 let transporter = null;
 
 function getTransporter() {
   if (transporter) return transporter;
+  const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } = process.env;
   if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) return null;
   transporter = nodemailer.createTransport({
     host: SMTP_HOST,
@@ -16,27 +15,26 @@ function getTransporter() {
   return transporter;
 }
 
-/**
- * Sends an email. If SMTP is not configured, logs the link to the server console
- * and returns { devLink } so the API can surface it in non-production only.
- */
 export async function sendMail({ to, subject, text, html, link }) {
   const mailer = getTransporter();
+  const { SMTP_USER, SMTP_FROM } = process.env;
   const from = SMTP_FROM || `Grand Restaurant & Cafe <${SMTP_USER || 'no-reply@localhost'}>`;
 
   if (!mailer) {
     console.log(`\n[mailer] SMTP not configured — email to ${to}:`);
     console.log(`[mailer] subject: ${subject}`);
     console.log(`[mailer] ${text}\n`);
-    return { dev: true, link: link || null };
+    return { dev: true, link: link || null, preview: null };
   }
 
-  await mailer.sendMail({ from, to, subject, text, html });
-  return { dev: false, link: null };
+  const info = await mailer.sendMail({ from, to, subject, text, html });
+  const preview = nodemailer.getTestMessageUrl(info) || null;
+  if (preview) console.log(`[mailer] email sent — preview: ${preview}`);
+  return { dev: false, link: link || null, preview };
 }
 
 export function appUrl(path = '/') {
-  const base = (APP_URL || 'http://localhost:5173').replace(/\/$/, '');
+  const base = (process.env.APP_URL || 'http://localhost:5173').replace(/\/$/, '');
   return `${base}${path}`;
 }
 
