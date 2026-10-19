@@ -50,7 +50,19 @@ export const register = async (req, res) => {
     const user = new User({ name, email });
     await user.setPassword(password);
     await user.save();
-    const mail = await issueVerification(user);
+
+    let mail;
+    try {
+      mail = await issueVerification(user);
+    } catch (mailError) {
+      // Roll back the brand-new account so a retry isn't blocked by a
+      // half-finished registration that never received its verification email.
+      await User.deleteOne({ _id: user._id }).catch(() => {});
+      console.error('[register] verification email failed:', mailError.message);
+      return res.status(503).json({
+        message: 'We could not send the verification email right now. Please try again in a few minutes.',
+      });
+    }
 
     return res.status(201).json({
       message: 'Verification email sent — please check your inbox and click the link to activate your account.',
@@ -62,7 +74,11 @@ export const register = async (req, res) => {
         : {}),
     });
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    if (error?.code === 11000) {
+      return res.status(409).json({ message: 'An account with this email already exists. Please log in.' });
+    }
+    console.error('[register] unexpected error:', error.message);
+    return res.status(500).json({ message: 'Something went wrong on our side. Please try again.' });
   }
 };
 
