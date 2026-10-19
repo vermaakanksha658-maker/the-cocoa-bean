@@ -95,6 +95,15 @@ export function CustomerProvider({ children }) {
     window.dispatchEvent(new CustomEvent('cb:continue', { detail: action }));
   }, [customer, pending]);
 
+  // A session can start in another tab (e.g. the verification link). When that
+  // happens, close the auth modal here too so this tab doesn't show a stale form.
+  const prevCustomerId = useRef(null);
+  useEffect(() => {
+    const id = customer?.id || null;
+    if (id && id !== prevCustomerId.current) setAuthOpen(false);
+    prevCustomerId.current = id;
+  }, [customer]);
+
   const openAuth = useCallback((opts = {}) => {
     setAuthTab(opts.tab || 'login');
     setAuthReason(opts.reason || '');

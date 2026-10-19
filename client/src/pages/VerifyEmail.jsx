@@ -33,6 +33,15 @@ export default function VerifyEmail() {
       });
   }, [token, setCustomerFromVerify]);
 
+  // After a successful verification, take the user to the site automatically.
+  useEffect(() => {
+    if (state !== 'ok') return undefined;
+    const timer = setTimeout(() => {
+      window.location.href = '/';
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [state]);
+
   return (
     <div className="myorders-wrap">
       <h1 className="myorders-title">Email verification</h1>
@@ -48,6 +57,7 @@ export default function VerifyEmail() {
           <button type="button" className="btn btn-primary" onClick={() => { window.location.href = '/'; }}>
             Continue to site
           </button>
+          <p className="myorders-sub">Taking you to the site…</p>
         </>
       )}
       {state === 'error' && (
